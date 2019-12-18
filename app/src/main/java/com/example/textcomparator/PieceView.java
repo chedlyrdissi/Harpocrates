@@ -8,8 +8,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * TODO: document your custom view class.
@@ -27,11 +30,9 @@ public class PieceView extends View {
     protected final String DOWN="@android:drawable/arrow_down_float";
     protected final String UP="@android:drawable/arrow_up_float";
 
-    private enum State{up,down};
-    private State state=State.down;
-
-    private String piececontext;
-    private String pieceinfo;
+    private TextView contextTextView;
+    private TextView infoTextView;
+    private ImageView image;
 
     public PieceView(Context context) {
         super(context);
@@ -49,6 +50,29 @@ public class PieceView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+
+        //LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //View view = (View) inflater.inflate(R.layout.sample_piece_view, null);
+        //get the subviews
+        contextTextView = (TextView) findViewById(R.id.ContextTextView);
+        infoTextView = (TextView) findViewById(R.id.InfoTextView);
+        image = (ImageView) findViewById(R.id.ArrowImageView);
+        infoTextView.setVisibility(GONE);
+        //setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        image.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (infoTextView.getVisibility()==GONE){
+                    image.setImageResource(R.drawable.arrow_up);
+                    infoTextView.setVisibility(VISIBLE);
+                }else {
+                    image.setImageResource(R.drawable.arrow_down);
+                    infoTextView.setVisibility(GONE);
+                }
+            }
+        });
+
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.PieceView, defStyle, 0);
@@ -71,8 +95,6 @@ public class PieceView extends View {
         }
 
         a.recycle();
-
-
 
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
@@ -123,10 +145,8 @@ public class PieceView extends View {
 
     public boolean setPieceInfo(String context,String info){
 
-        this.piececontext=context;
-        this.pieceinfo=info;
-
-
+        contextTextView.setText(context);
+        infoTextView.setText(info);
 
         return true;
     }
