@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
 /**
  * TODO: document your custom view class.
@@ -22,6 +23,15 @@ public class PieceView extends View {
     private TextPaint mTextPaint;
     private float mTextWidth;
     private float mTextHeight;
+
+    protected final String DOWN="@android:drawable/arrow_down_float";
+    protected final String UP="@android:drawable/arrow_up_float";
+
+    private enum State{up,down};
+    private State state=State.down;
+
+    private String piececontext;
+    private String pieceinfo;
 
     public PieceView(Context context) {
         super(context);
@@ -61,6 +71,8 @@ public class PieceView extends View {
         }
 
         a.recycle();
+
+
 
         // Set up a default TextPaint object
         mTextPaint = new TextPaint();
@@ -106,6 +118,17 @@ public class PieceView extends View {
                     paddingLeft + contentWidth, paddingTop + contentHeight);
             mExampleDrawable.draw(canvas);
         }
+
+    }
+
+    public boolean setPieceInfo(String context,String info){
+
+        this.piececontext=context;
+        this.pieceinfo=info;
+
+
+
+        return true;
     }
 
     /**
