@@ -5,13 +5,19 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/wolhaiksong_crest"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Space
+    <TextView
+        android:id="@+id/welcomeTextView"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:text="welcome to the treasure chest"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorSecondary"
+        android:textStyle="bold|italic" />
 
     <fragment
         android:id="@+id/fragment2"

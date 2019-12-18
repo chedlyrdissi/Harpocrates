@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wolhaiksong_crest"
+        android:background="#8C000000"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -25,8 +25,10 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="username"
                 android:inputType="textPersonName"
+                android:textColor="@color/colorSecondary"
                 android:textStyle="bold|italic" />
 
             <View
@@ -48,8 +50,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="password"
                 android:inputType="textPassword"
+                android:textColor="@color/colorSecondary"
                 android:textStyle="bold|italic" />
 
             <View
@@ -67,7 +71,7 @@
             android:layout_marginTop="25dp"
             android:background="#00000000"
             android:text="unlock"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorSecondary" />
 
     </LinearLayout>
 
