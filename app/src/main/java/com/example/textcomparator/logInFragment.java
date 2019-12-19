@@ -1,7 +1,6 @@
 package com.example.textcomparator;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 
 /**
@@ -22,6 +24,16 @@ import android.view.ViewGroup;
 public class logInFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+
+    private EditText username;
+    private ImageView usernameOrbGreen;
+    private ImageView usernameOrbRed;
+
+    private EditText password;
+    private ImageView passwordOrbGreen;
+    private ImageView passwordOrbRed;
+
+    private Button unlockButton;
 
     public logInFragment() {
         // Required empty public constructor
@@ -43,16 +55,36 @@ public class logInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_log_in, container, false);
+        View view = inflater.inflate(R.layout.fragment_log_in, container, true);
+        username= view.findViewById(R.id.username);
+        usernameOrbGreen= view.findViewById(R.id.usernameOrbGreen);
+        usernameOrbRed= view.findViewById(R.id.usernameOrbRed);
+        password= view.findViewById(R.id.password);
+        passwordOrbGreen= view.findViewById(R.id.passwordOrbGreen);
+        passwordOrbRed= view.findViewById(R.id.passwordOrbRed);
+        unlockButton= view.findViewById(R.id.unlockButton);
+
+        unlockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unlockButtonClick();
+            }
+        });
+
+        usernameOrbGreen.setVisibility(View.INVISIBLE);
+        usernameOrbRed.setVisibility(View.INVISIBLE);
+
+        passwordOrbGreen.setVisibility(View.INVISIBLE);
+        passwordOrbRed.setVisibility(View.INVISIBLE);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,6 +109,29 @@ public class logInFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void unlockButtonClick(){
+        String user=username.getText().toString();
+        String pass=password.getText().toString();
+        boolean usernameExists=StashDataBase.getInstance().usernameExists(user);
+
+        if (usernameExists){
+            usernameOrbGreen.setVisibility(View.VISIBLE);
+            if (StashDataBase.getInstance().checkPassword(user,pass)){
+                passwordOrbRed.setVisibility(View.INVISIBLE);
+                passwordOrbGreen.setVisibility(View.VISIBLE);
+
+
+            }else{
+                passwordOrbRed.setVisibility(View.VISIBLE);
+                passwordOrbGreen.setVisibility(View.INVISIBLE);
+            }
+        }else{
+            usernameOrbGreen.setVisibility(View.INVISIBLE);
+            usernameOrbRed.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**
