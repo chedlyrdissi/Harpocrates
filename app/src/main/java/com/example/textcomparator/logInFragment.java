@@ -1,16 +1,21 @@
 package com.example.textcomparator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -87,13 +92,6 @@ public class logInFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -121,8 +119,7 @@ public class logInFragment extends Fragment {
             if (StashDataBase.getInstance().checkPassword(user,pass)){
                 passwordOrbRed.setVisibility(View.INVISIBLE);
                 passwordOrbGreen.setVisibility(View.VISIBLE);
-
-
+                mListener.onFragmentInteraction(user,pass);
             }else{
                 passwordOrbRed.setVisibility(View.VISIBLE);
                 passwordOrbGreen.setVisibility(View.INVISIBLE);
@@ -145,7 +142,6 @@ public class logInFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction();
+        void onFragmentInteraction(String username,String password);
     }
 }
