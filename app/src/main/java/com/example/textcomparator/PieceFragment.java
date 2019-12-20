@@ -29,7 +29,7 @@ public class PieceFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
 
     private List<Piece> pieces;
@@ -40,13 +40,14 @@ public class PieceFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PieceFragment() {
+    public PieceFragment(List<Piece> list) {
+        pieces=list;
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static PieceFragment newInstance(int columnCount) {
-        PieceFragment fragment = new PieceFragment();
+    public static PieceFragment newInstance(int columnCount,List<Piece> list) {
+        PieceFragment fragment = new PieceFragment(list);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -73,7 +74,6 @@ public class PieceFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            pieces=new ArrayList<Piece>(10);
             adapter=new PieceRecyclerViewAdapter( pieces, mListener);
             recyclerView.setAdapter(adapter);
             pieces.add(new Piece("context1"));

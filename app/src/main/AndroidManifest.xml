@@ -9,7 +9,10 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StashActivity"></activity>
+        <activity
+            android:name=".RegularActivity"
+            android:label="@string/title_activity_regular"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"

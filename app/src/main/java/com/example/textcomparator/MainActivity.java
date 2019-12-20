@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
                     Intent intent=new Intent(MainActivity.this, AdminActivity.class);
                     startActivity(intent);
                 }else if (type==AccountType.regular){
-                    Intent intent=new Intent(MainActivity.this, StashActivity.class);
+                    Intent intent=new Intent(MainActivity.this, RegularActivity.class);
                     startActivity(intent);
                 }
             }
