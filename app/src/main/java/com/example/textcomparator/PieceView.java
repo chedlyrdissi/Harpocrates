@@ -51,12 +51,12 @@ public class PieceView extends View {
 
     private void init(AttributeSet attrs, int defStyle) {
 
-        //LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //View view = (View) inflater.inflate(R.layout.sample_piece_view, null);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.sample_piece_view, null);
         //get the subviews
-        contextTextView = (TextView) findViewById(R.id.ContextTextView);
-        infoTextView = (TextView) findViewById(R.id.InfoTextView);
-        image = (ImageView) findViewById(R.id.ArrowImageView);
+        contextTextView = view.findViewById(R.id.ContextTextView);
+        infoTextView = view.findViewById(R.id.InfoTextView);
+        image = view.findViewById(R.id.ArrowImageView);
         infoTextView.setVisibility(GONE);
         //setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 

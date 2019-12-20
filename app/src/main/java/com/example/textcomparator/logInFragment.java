@@ -110,23 +110,29 @@ public class logInFragment extends Fragment {
     }
 
     public void unlockButtonClick(){
-        String user=username.getText().toString();
-        String pass=password.getText().toString();
-        boolean usernameExists=StashDataBase.getInstance().usernameExists(user);
+        try{
 
-        if (usernameExists){
+            StashDataBase.getInstance().authenticate(username.getText().toString(),
+                    password.getText().toString());
+
             usernameOrbGreen.setVisibility(View.VISIBLE);
-            if (StashDataBase.getInstance().checkPassword(user,pass)){
-                passwordOrbRed.setVisibility(View.INVISIBLE);
-                passwordOrbGreen.setVisibility(View.VISIBLE);
-                mListener.onFragmentInteraction(user,pass);
-            }else{
-                passwordOrbRed.setVisibility(View.VISIBLE);
-                passwordOrbGreen.setVisibility(View.INVISIBLE);
-            }
-        }else{
+            passwordOrbGreen.setVisibility(View.VISIBLE);
+
+            mListener.onFragmentInteraction(username.getText().toString(),
+                    password.getText().toString());
+
+        }catch(IncorrectUsernameException e){
             usernameOrbGreen.setVisibility(View.INVISIBLE);
             usernameOrbRed.setVisibility(View.VISIBLE);
+
+            passwordOrbGreen.setVisibility(View.INVISIBLE);
+            passwordOrbRed.setVisibility(View.INVISIBLE);
+        }catch (IncorrectPasswordException e){
+            usernameOrbGreen.setVisibility(View.VISIBLE);
+            usernameOrbRed.setVisibility(View.INVISIBLE);
+
+            passwordOrbGreen.setVisibility(View.INVISIBLE);
+            passwordOrbRed.setVisibility(View.VISIBLE);
         }
 
     }

@@ -3,8 +3,10 @@ package com.example.textcomparator;
 public class StashDataBase {
 
     private static StashDataBase instance;
+    private static DummyDataBase dummy;
 
     private StashDataBase(){
+        dummy=new DummyDataBase();
     }
 
     public static StashDataBase getInstance(){
@@ -14,14 +16,11 @@ public class StashDataBase {
         return instance;
     }
 
-    public boolean usernameExists(String username){
+    public void authenticate(String username,String password) throws
+            IncorrectPasswordException,IncorrectUsernameException{
         //TODO
-        return true;
-    }
-
-    public boolean checkPassword(String username,String password){
-        //TODO
-        return true;
+        if(dummy.get(username)==null) throw new IncorrectUsernameException();
+        if(!dummy.get(username).equals(password)) throw new IncorrectPasswordException();
     }
 
     public AccountType getAccountType(String username,String password){
@@ -36,6 +35,10 @@ public class StashDataBase {
                 return AccountType.regular;
 
         return AccountType.irregular;
+    }
+
+    private boolean usernameExists(String username) {
+        return true;
     }
 
     //TODO
