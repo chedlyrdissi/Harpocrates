@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 
@@ -19,19 +19,21 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
     private PieceFragment listFragment;
     private Toolbar toolbar;
     private List<Piece> list;
-    private CoordinatorLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular);
+
         list=new ArrayList<>();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mainLayout= findViewById(R.id.mainRegularLayout);
 
-        listFragment= PieceFragment.newInstance(2,list);
-        
+        listFragment=PieceFragment.newInstance(2,list);
+
+        //FragmentTransaction ft = (FragmentTransaction) getFragmentManager().beginTransaction();
+        //ft.add(R.id.RegularFragmentLayout, listFragment).commit();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,14 +31,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <fragment
-        android:id="@+id/fragment4"
-        android:name="com.example.textcomparator.PieceFragment"
-        class="PieceFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="100dp" />
+    <FrameLayout
+        android:id="@+id/RegularFragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp">
+
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

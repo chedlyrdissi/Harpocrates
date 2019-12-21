@@ -38,7 +38,7 @@ public class logInFragment extends Fragment {
     private ImageView passwordOrbGreen;
     private ImageView passwordOrbRed;
 
-    private Button unlockButton;
+    private Button unlockButton,signupbutton;
 
     public logInFragment() {
         // Required empty public constructor
@@ -75,11 +75,19 @@ public class logInFragment extends Fragment {
         passwordOrbGreen= view.findViewById(R.id.passwordOrbGreen);
         passwordOrbRed= view.findViewById(R.id.passwordOrbRed);
         unlockButton= view.findViewById(R.id.unlockButton);
+        signupbutton=view.findViewById(R.id.createAccountButton);
 
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unlockButtonClick();
+            }
+        });
+
+        signupbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.signUp();
             }
         });
 
@@ -110,32 +118,38 @@ public class logInFragment extends Fragment {
     }
 
     public void unlockButtonClick(){
-        try{
-
-            StashDataBase.getInstance().authenticate(username.getText().toString(),
-                    password.getText().toString());
-
-            usernameOrbGreen.setVisibility(View.VISIBLE);
-            passwordOrbGreen.setVisibility(View.VISIBLE);
-
+        if (StashDataBase.getInstance(getContext()).isGod(username.getText().toString(),
+                password.getText().toString())){
             mListener.onFragmentInteraction(username.getText().toString(),
                     password.getText().toString());
+        }else{
+            try{
 
-        }catch(IncorrectUsernameException e){
-            usernameOrbGreen.setVisibility(View.INVISIBLE);
-            usernameOrbRed.setVisibility(View.VISIBLE);
+                StashDataBase.getInstance(getContext()).authenticate(username.getText().toString(),
+                        password.getText().toString());
 
-            passwordOrbGreen.setVisibility(View.INVISIBLE);
-            passwordOrbRed.setVisibility(View.INVISIBLE);
-        }catch (IncorrectPasswordException e){
-            usernameOrbGreen.setVisibility(View.VISIBLE);
-            usernameOrbRed.setVisibility(View.INVISIBLE);
+                usernameOrbGreen.setVisibility(View.VISIBLE);
+                passwordOrbGreen.setVisibility(View.VISIBLE);
 
-            passwordOrbGreen.setVisibility(View.INVISIBLE);
-            passwordOrbRed.setVisibility(View.VISIBLE);
+                mListener.onFragmentInteraction(username.getText().toString(),
+                        password.getText().toString());
+
+            }catch(IncorrectUsernameException e){
+                usernameOrbGreen.setVisibility(View.INVISIBLE);
+                usernameOrbRed.setVisibility(View.VISIBLE);
+
+                passwordOrbGreen.setVisibility(View.INVISIBLE);
+                passwordOrbRed.setVisibility(View.INVISIBLE);
+            }catch (IncorrectPasswordException e){
+                usernameOrbGreen.setVisibility(View.VISIBLE);
+                usernameOrbRed.setVisibility(View.INVISIBLE);
+
+                passwordOrbGreen.setVisibility(View.INVISIBLE);
+                passwordOrbRed.setVisibility(View.VISIBLE);
+            }
         }
-
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -149,5 +163,6 @@ public class logInFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String username,String password);
+        void signUp();
     }
 }

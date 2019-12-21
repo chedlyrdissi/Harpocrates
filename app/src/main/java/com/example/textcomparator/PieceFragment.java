@@ -12,10 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.textcomparator.dummy.DummyContent;
-import com.example.textcomparator.dummy.DummyContent.DummyItem;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,6 +81,10 @@ public class PieceFragment extends Fragment {
         return view;
     }
 
+    public void setList(List<Piece> list){
+        this.pieces=list;
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {

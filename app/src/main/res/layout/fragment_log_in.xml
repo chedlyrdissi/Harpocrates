@@ -101,6 +101,15 @@
             android:text="unlock"
             android:textColor="@color/colorSecondary" />
 
+        <Button
+            android:id="@+id/createAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="sign up"
+            android:layout_marginTop="25dp"
+            android:background="#00000000"
+            android:textColor="@color/colorSecondary" />
+
     </LinearLayout>
 
 </FrameLayout>

@@ -20,10 +20,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private ListView listview;
+    private List<String> list;
+    private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,13 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        listview=findViewById(R.id.AccountList);
+        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
+        adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
