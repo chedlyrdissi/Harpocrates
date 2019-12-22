@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/contextToAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBack"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="context"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary" />
+
+        <Button
+            android:id="@+id/createContextButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBack"
+            android:text="create context"
+            android:textColor="@color/colorSecondary" />
+    </LinearLayout>
+
+</FrameLayout>

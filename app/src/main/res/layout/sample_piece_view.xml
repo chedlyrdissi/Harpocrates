@@ -22,9 +22,8 @@
 
             <TextView
                 android:id="@+id/ContextTextView"
-                android:layout_width="384dp"
+                android:layout_width="299dp"
                 android:layout_height="match_parent"
-                android:text="context"
                 android:textColor="@color/colorSecondary"
                 android:textColorHint="@color/colorSecondary" />
 
@@ -43,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:text="info"
+            android:inputType="textMultiLine"
             android:textColor="@color/colorSecondary"
             android:textColorHint="@color/colorSecondary" />
     </LinearLayout>

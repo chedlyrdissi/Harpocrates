@@ -20,9 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="130dp"
-        android:background="@drawable/defaultdrawable">
-
-    </FrameLayout>
+        android:background="@drawable/defaultdrawable"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

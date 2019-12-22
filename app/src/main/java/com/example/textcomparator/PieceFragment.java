@@ -1,8 +1,10 @@
 package com.example.textcomparator;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +27,7 @@ public class PieceFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 2;
+    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     private List<Piece> pieces;
@@ -56,6 +58,7 @@ public class PieceFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,10 +75,14 @@ public class PieceFragment extends Fragment {
             }
             adapter=new PieceRecyclerViewAdapter( pieces, mListener);
             recyclerView.setAdapter(adapter);
-            pieces.add(new Piece("context1"));
-            pieces.add(new Piece("context2"));
-            pieces.add(new Piece("context3"));
-            pieces.add(new Piece("context4"));
+            Piece piece;
+            for (int i=0;i<5;i++){
+                piece=new Piece("context "+i);
+                piece.add("key"+i,"value"+i);
+                piece.add("keey"+i,"valuue"+i);
+                piece.add("keeey"+i,"valuuue"+i);
+                pieces.add(piece);
+            }
             adapter.notifyDataSetChanged();
         }
         return view;
@@ -101,6 +108,11 @@ public class PieceFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    //TODO
+    public void sync(){
+        adapter.notifyDataSetChanged();
     }
 
     /**

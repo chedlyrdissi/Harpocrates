@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.textcomparator.PieceFragment.OnListFragmentInteractionListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecyclerViewAdapter.ViewHolder> {
     //list of pieces
-    private final List<Piece> mValues;
+    private List<Piece> mValues;
     //activity
     private final OnListFragmentInteractionListener mListener;
 
@@ -38,6 +39,8 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.piece = mValues.get(position);
         //setting the values for the texts
+        holder.contextTextView.setText(mValues.get(position).getContext());
+        holder.infoTextView.setText(mValues.get(position).getInfoString());
 
         holder.frame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +53,7 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -72,7 +76,7 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
 
         @Override
         public String toString() {
-            return "";
+             return "";
         }
     }
 }

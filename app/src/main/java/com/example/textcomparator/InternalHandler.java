@@ -18,6 +18,7 @@ public class InternalHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD= "password";
+    private static final String COLUMN_INFOID="info";
 
     public InternalHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,7 +29,7 @@ public class InternalHandler extends SQLiteOpenHelper {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
                 TABLE_ACCOUNT + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
-                + " TEXT," + COLUMN_PASSWORD + " TEXT )";
+                + " TEXT," + COLUMN_PASSWORD + " TEXT, "+COLUMN_INFOID+" Integer FOREIGN KEY )";
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
@@ -88,11 +89,6 @@ public class InternalHandler extends SQLiteOpenHelper {
 
     public void replace(int id,String username,String password){
         SQLiteDatabase db=getWritableDatabase();
-        /*
-        String query="UPDATE "+TABLE_ACCOUNT+" SET "+COLUMN_USERNAME+"= '"+username+"' ," +
-                ""+COLUMN_PASSWORD+"= '"+password+"' WHERE "+COLUMN_ID+" = "+id;
-        db.rawQuery(query,null);
-        */
         db.delete(TABLE_ACCOUNT,COLUMN_ID+" = "+id,null);
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_ID,id);

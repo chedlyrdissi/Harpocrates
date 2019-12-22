@@ -58,7 +58,6 @@ public class PieceView extends View {
         infoTextView = view.findViewById(R.id.InfoTextView);
         image = view.findViewById(R.id.ArrowImageView);
         infoTextView.setVisibility(GONE);
-        //setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         image.setOnClickListener(new OnClickListener() {
             @Override

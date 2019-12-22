@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/piece_drawable"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/pieceContextInDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBack"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorSecondary" />
+
+        <Button
+            android:id="@+id/updatePieceInDialogButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBack"
+            android:text="update"
+            android:textColor="@color/colorSecondary" />
+    </LinearLayout>
+
+</FrameLayout>

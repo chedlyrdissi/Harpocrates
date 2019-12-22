@@ -73,7 +73,7 @@ public class Piece {
     public String getInfoString(){
         StringBuffer buffer=new StringBuffer();
         for (String key:infoMap.keySet()){
-            buffer.append("/n"+key+" = "+infoMap.get(key));
+            buffer.append(key+" = "+infoMap.get(key)+"\n");
         }
         return buffer.toString();
     }
