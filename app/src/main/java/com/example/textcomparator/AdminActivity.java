@@ -81,8 +81,7 @@ public class AdminActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         StashDataBase.getInstance(getApplicationContext()).updateAcocunt(list.get(position).ID,
                                 username.getText().toString(),password.getText().toString());
-                        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-                        adapter.notifyDataSetChanged();
+                        sync.performClick();
                         dialog.dismiss();
                     }
                 });
@@ -91,8 +90,7 @@ public class AdminActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         StashDataBase.getInstance(getApplicationContext()).deleteAcocunt(user);
-                        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-                        adapter.notifyDataSetChanged();
+                        sync.performClick();
                         dialog.dismiss();
                     }
                 });
@@ -122,6 +120,7 @@ public class AdminActivity extends AppCompatActivity {
                             Toast.makeText(AdminActivity.this,
                                     StashDataBase.getInstance(getApplicationContext()).listNumber(),
                                     Toast.LENGTH_LONG).show();
+                            sync.performClick();
                             dialog.dismiss();
                         }catch(Exception e){
                             Toast.makeText(getApplicationContext(),"the querry is broken",
@@ -158,8 +157,7 @@ public class AdminActivity extends AppCompatActivity {
                         if(Helper.validPassword(p) && Helper.validUserName(u)){
                             try{
                                 StashDataBase.getInstance(getApplicationContext()).createAccount(u,p);
-                                list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-                                adapter.notifyDataSetChanged();
+                                sync.performClick();
                                 dialog.dismiss();
                             }catch(Exception e){
                                 error.setText(e.getMessage());
@@ -178,7 +176,9 @@ public class AdminActivity extends AppCompatActivity {
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list= StashDataBase.getInstance(getApplicationContext()).getAccountList();
+                adapter.clear();
+                adapter.addAll(StashDataBase.getInstance(getApplicationContext()).getAccountList());
+                //list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
                 adapter.notifyDataSetChanged();
             }
         });
