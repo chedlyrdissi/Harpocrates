@@ -1,13 +1,13 @@
 package com.example.textcomparator;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
 public class StashDataBase {
 
     private static StashDataBase instance;
-    //private static DummyDataBase dummy;
     private static InternalHandler internaldb;
 
     private StashDataBase(Context context){
@@ -25,14 +25,12 @@ public class StashDataBase {
     public void authenticate(String username,String password) throws
             IncorrectPasswordException,IncorrectUsernameException{
         //TODO
-        //if(dummy.get(username)==null) throw new IncorrectUsernameException();
-        //if(!dummy.get(username).equals(password)) throw new IncorrectPasswordException();
-        if(!internaldb.accountExists(username)) throw new IncorrectUsernameException();
+        if(!internaldb.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
         String pw=internaldb.getPassword(username);
-        if(pw==null || password==null) throw new IncorrectPasswordException();
+        if(pw==null || password==null) throw new IncorrectPasswordException("password is null");
         pw=decode(pw);
-        if(pw==null) throw new IncorrectPasswordException();
-        if(!pw.equals(password)) throw new IncorrectPasswordException();
+        if(pw==null) throw new IncorrectPasswordException("inexistant password");
+        if(!pw.equals(password)) throw new IncorrectPasswordException("incorrect password");
     }
 
     public AccountType getAccountType(String username,String password){
@@ -53,6 +51,10 @@ public class StashDataBase {
         internaldb.addAccount(username,password);
     }
 
+    public int listNumber(){
+        return internaldb.getAccountNumbers();
+    }
+
     public boolean usernameExists(String username) {
         return internaldb.accountExists(username);
     }
@@ -63,7 +65,19 @@ public class StashDataBase {
         return false;
     }
 
-    public List<String> getAccountList(){
+    public void deleteAcocunt(String username){
+        internaldb.deleteAccount(username);
+    }
+
+    public void updateAcocunt(int old,String username,String pw){
+        internaldb.replace(old,username,pw);
+    }
+
+    public void executeQuerry(String querry){
+        internaldb.execute(querry);
+    }
+
+    public List<Info> getAccountList(){
         return internaldb.getAccounts();
     }
 
@@ -79,6 +93,6 @@ public class StashDataBase {
 
     //TODO
     private String getPassword(String username){
-        return new DummyDataBase().get(username);
+        return internaldb.getPassword(username);
     }
 }

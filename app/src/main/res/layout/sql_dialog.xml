@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/colorBack"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/sqlText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/piece_drawable"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="enter sql querry"
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:textColor="@color/colorSecondary"
+        android:textColorHint="@color/colorSecondary" />
+
+    <TextView
+        android:id="@+id/errorMessageInInputDialog2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:textColor="@color/colorSecondary" />
+
+    <Button
+        android:id="@+id/executeQuerryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/piece_drawable"
+        android:singleLine="false"
+        android:text="execute"
+        android:textColor="@color/colorSecondary" />
+</LinearLayout>

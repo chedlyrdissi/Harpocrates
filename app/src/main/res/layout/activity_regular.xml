@@ -8,34 +8,19 @@
     android:background="@drawable/wolhaiksong_crest"
     tools:context=".RegularActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="337dp"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <Button
-            android:id="@+id/settingButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBack"
-            android:foreground="@android:drawable/ic_menu_preferences"
-            android:text="Button" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <FrameLayout
         android:id="@+id/RegularFragmentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="130dp">
+        android:layout_marginTop="130dp"
+        android:background="@drawable/defaultdrawable">
 
     </FrameLayout>
 

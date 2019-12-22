@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -68,14 +71,17 @@ public class logInFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_log_in, container, true);
-        username= view.findViewById(R.id.username);
-        usernameOrbGreen= view.findViewById(R.id.usernameOrbGreen);
-        usernameOrbRed= view.findViewById(R.id.usernameOrbRed);
-        password= view.findViewById(R.id.password);
-        passwordOrbGreen= view.findViewById(R.id.passwordOrbGreen);
-        passwordOrbRed= view.findViewById(R.id.passwordOrbRed);
-        unlockButton= view.findViewById(R.id.unlockButton);
-        signupbutton=view.findViewById(R.id.createAccountButton);
+
+        username=           view.findViewById(R.id.username);
+        usernameOrbGreen=   view.findViewById(R.id.usernameOrbGreen);
+        usernameOrbRed=     view.findViewById(R.id.usernameOrbRed);
+
+        password=           view.findViewById(R.id.password);
+        passwordOrbGreen=   view.findViewById(R.id.passwordOrbGreen);
+        passwordOrbRed=     view.findViewById(R.id.passwordOrbRed);
+
+        unlockButton=       view.findViewById(R.id.unlockButton);
+        signupbutton=       view.findViewById(R.id.createAccountButton);
 
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,39 +121,61 @@ public class logInFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+        username.setText("");
+        password.setText("");
+
+        usernameOrbGreen.setVisibility(View.INVISIBLE);
+        passwordOrbGreen.setVisibility(View.INVISIBLE);
+        usernameOrbRed.setVisibility(View.INVISIBLE);
+        passwordOrbRed.setVisibility(View.INVISIBLE);
     }
 
     public void unlockButtonClick(){
+
+        Toast.makeText(getContext(),""+StashDataBase.getInstance(getContext()).listNumber(),Toast.LENGTH_SHORT).show();
+
         if (StashDataBase.getInstance(getContext()).isGod(username.getText().toString(),
                 password.getText().toString())){
+            Toast.makeText(getContext(),"welcome to god mode",Toast.LENGTH_SHORT).show();
             mListener.onFragmentInteraction(username.getText().toString(),
                     password.getText().toString());
         }else{
             try{
-
                 StashDataBase.getInstance(getContext()).authenticate(username.getText().toString(),
                         password.getText().toString());
 
                 usernameOrbGreen.setVisibility(View.VISIBLE);
                 passwordOrbGreen.setVisibility(View.VISIBLE);
+                usernameOrbRed.setVisibility(View.INVISIBLE);
+                passwordOrbRed.setVisibility(View.INVISIBLE);
 
                 mListener.onFragmentInteraction(username.getText().toString(),
                         password.getText().toString());
 
             }catch(IncorrectUsernameException e){
+
+                Snackbar.make(unlockButton,e.getMessage(),Snackbar.LENGTH_SHORT).show();
+
                 usernameOrbGreen.setVisibility(View.INVISIBLE);
                 usernameOrbRed.setVisibility(View.VISIBLE);
 
                 passwordOrbGreen.setVisibility(View.INVISIBLE);
                 passwordOrbRed.setVisibility(View.INVISIBLE);
+
             }catch (IncorrectPasswordException e){
+
+                Snackbar.make(unlockButton,e.getMessage(),Snackbar.LENGTH_SHORT).show();
+
                 usernameOrbGreen.setVisibility(View.VISIBLE);
                 usernameOrbRed.setVisibility(View.INVISIBLE);
 
                 passwordOrbGreen.setVisibility(View.INVISIBLE);
                 passwordOrbRed.setVisibility(View.VISIBLE);
+
             }
         }
+
     }
 
 

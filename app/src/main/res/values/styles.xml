@@ -6,6 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
+    <style name="AccountList" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:background">@color/colorBack</item>
+    </style>
+
+    <style name="pieceStyle">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

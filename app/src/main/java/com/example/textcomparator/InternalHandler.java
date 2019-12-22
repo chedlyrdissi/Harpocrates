@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InternalHandler extends SQLiteOpenHelper {
 
@@ -41,9 +39,10 @@ public class InternalHandler extends SQLiteOpenHelper {
     }
 
     public void addAccount(String username,String password){
+
         if (username==null || password==null) return;
+
         if(accountExists(username)){
-            Toast.makeText(null,"the account exists already",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -56,65 +55,108 @@ public class InternalHandler extends SQLiteOpenHelper {
     }
 
     public boolean accountExists(String username){
+        boolean result=false;
         SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT username ,password From "+
-                TABLE_ACCOUNT+" WHERE username= ' "+username+" ' ";
-        boolean result=db.rawQuery(query,null).getCount()>=0;
+        Cursor cursor=null;
+        try{
+            String query="SELECT username From "+
+                    TABLE_ACCOUNT+" WHERE username= '"+username+"' ";
+            cursor=db.rawQuery(query,null);
+            result=cursor.getCount()>0;
+        }catch(Exception e){
+        }finally{
+            if(cursor!=null) cursor.close();
+            db.close();
+        }
+        return result;
+    }
+
+    public int getAccountNumbers(){
+        int result;
+        SQLiteDatabase db=getReadableDatabase();
+        String querry="SELECT * FROM "+TABLE_ACCOUNT;
+        result=db.rawQuery(querry,null).getCount();
         db.close();
         return result;
     }
 
     public void deleteAccount(String username){
         SQLiteDatabase db=this.getWritableDatabase();
-        db.delete(TABLE_ACCOUNT,"username= ' "+username+" ' ",null);
+        db.delete(TABLE_ACCOUNT,"username= '"+username+"' ",null);
         db.close();
     }
 
-    public void replace(String id,String username,String password){
+    public void replace(int id,String username,String password){
         SQLiteDatabase db=getWritableDatabase();
-        String query="UPDATE "+TABLE_ACCOUNT+" SET "+COLUMN_USERNAME+"= ' "+username+" ' ," +
-                ""+COLUMN_PASSWORD+"= ' "+password+" ' WHERE "+COLUMN_ID+" = "+id;
+        /*
+        String query="UPDATE "+TABLE_ACCOUNT+" SET "+COLUMN_USERNAME+"= '"+username+"' ," +
+                ""+COLUMN_PASSWORD+"= '"+password+"' WHERE "+COLUMN_ID+" = "+id;
         db.rawQuery(query,null);
+        */
+        db.delete(TABLE_ACCOUNT,COLUMN_ID+" = "+id,null);
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COLUMN_ID,id);
+        contentValues.put(COLUMN_USERNAME,username);
+        contentValues.put(COLUMN_PASSWORD,password);
+        db.insert(TABLE_ACCOUNT,null,contentValues);
+
+        db.close();
     }
 
     public int getIDByUsername(String username){
         SQLiteDatabase db=getReadableDatabase();
-        String querry="SELECT "+COLUMN_ID+" FROM "+TABLE_ACCOUNT+" WHERE "+COLUMN_USERNAME+"= ' "+username+" ' ";
+        String querry="SELECT "+COLUMN_ID+" FROM "+TABLE_ACCOUNT+" WHERE "+COLUMN_USERNAME+"= '"+username+"' ";
         int result=(db.rawQuery(querry,null)).getInt(0);
         db.close();
         return result;
     }
 
-    public List<String> getAccounts(){
-        List<String> list=new ArrayList<>();
-        String str;
+    public List<Info> getAccounts(){
+        List<Info> list=new ArrayList<>();
+        Info info;
         SQLiteDatabase db=this.getReadableDatabase();
         String query="SELECT * From "+ TABLE_ACCOUNT;
         Cursor cursor=db.rawQuery(query,null);
         cursor.moveToFirst();
         for(int i=0;i<cursor.getCount();i++){
             //get values
-            str="";
-            for (int j=0;j<3;j++){
-                str+=cursor.getString(j);
-            }
-            list.add(str);
+            info=new Info();
+            info.ID=Integer.parseInt(cursor.getString(0));
+            info.username=cursor.getString(1);
+            info.pw=cursor.getString(2);
+
+            list.add(info);
             cursor.moveToNext();
         }
         cursor.close();
         db.close();
         return list;
     }
+
     public String getPassword(String username){
-        String result="";
+        String result;
+        SQLiteDatabase db=getReadableDatabase();
         try{
-            int id=getIDByUsername(username);
-            SQLiteDatabase db=getReadableDatabase();
-            String querry="SELECT "+COLUMN_PASSWORD+" FROM "+TABLE_ACCOUNT+" WHERE "+COLUMN_ID+"="+id;
-            result=db.rawQuery(querry,null).getString(0);
+            String querry="SELECT "+COLUMN_PASSWORD+" FROM "+TABLE_ACCOUNT+
+                    " WHERE "+COLUMN_USERNAME+"='"+username+"'";
+            Cursor cursor=db.rawQuery(querry,null);
+            if (cursor.moveToFirst()) {
+                result = cursor.getString(0);
+            }else{
+                result=null;
+            }
+            cursor.close();
         }catch(Exception e){
             result=null;
+        }finally {
+            db.close();
         }
         return result;
+    }
+
+    public void execute(String querry){
+        SQLiteDatabase db=getWritableDatabase();
+        db.rawQuery(querry,null);
+        db.close();
     }
 }

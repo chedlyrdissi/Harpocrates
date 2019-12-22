@@ -1,10 +1,13 @@
 package com.example.textcomparator;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.telecom.StatusHints;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -20,67 +23,165 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.Window;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private ListView listview;
-    private List<String> list;
+    private List<Info> list;
     private ArrayAdapter adapter;
+    private ImageView sqlExecutor,isqlInsertmageView,sync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         listview=findViewById(R.id.AccountList);
-        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-        adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
+        adapter=new ArrayAdapter<>(this, R.layout.simple_list_item_custom, list);
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final Dialog dialog=new Dialog(AdminActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_OPTIONS_PANEL);
+                dialog.setContentView(R.layout.account_selection_layout);
+
+                final String user=list.get(position).username;
+                String pw=list.get(position).pw;
+
+                Toast.makeText(AdminActivity.this,user+" "+pw,Toast.LENGTH_SHORT).show();
+
+                final EditText username=dialog.findViewById(R.id.DialogUsername);
+                final EditText password=dialog.findViewById(R.id.DialogPassword);
+                Button update=dialog.findViewById(R.id.DialogUpdateButton);
+                Button delete=dialog.findViewById(R.id.DialogDeleteButton);
+
+                username.setText(user);
+                password.setText(pw);
+
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        StashDataBase.getInstance(getApplicationContext()).updateAcocunt(list.get(position).ID,
+                                username.getText().toString(),password.getText().toString());
+                        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        StashDataBase.getInstance(getApplicationContext()).deleteAcocunt(user);
+                        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
+        sqlExecutor=findViewById(R.id.sqlImageView);
+        sqlExecutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog=new Dialog(AdminActivity.this);
+                dialog.setContentView(R.layout.sql_dialog);
+
+                final EditText sql=dialog.findViewById(R.id.sqlText);
+                Button execute=dialog.findViewById(R.id.executeQuerryButton);
+                final TextView error=dialog.findViewById(R.id.errorMessageInInputDialog2);
+                error.setVisibility(View.GONE);
+
+                execute.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String querry=sql.getText().toString();
+                        try{
+                            StashDataBase.getInstance(getApplicationContext()).executeQuerry(querry);
+                            Toast.makeText(AdminActivity.this,
+                                    StashDataBase.getInstance(getApplicationContext()).listNumber(),
+                                    Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }catch(Exception e){
+                            Toast.makeText(getApplicationContext(),"the querry is broken",
+                                    Toast.LENGTH_SHORT).show();
+                            error.setText("the querry * "+querry+" * is broken +"+e.getMessage());
+                            error.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        isqlInsertmageView=findViewById(R.id.isqlInsertmageView);
+        isqlInsertmageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog=new Dialog(AdminActivity.this);
+                dialog.setContentView(R.layout.sql_insert_dialog);
+
+                final EditText user=dialog.findViewById(R.id.usernameValue);
+                final EditText pw=dialog.findViewById(R.id.passwordValue);
+                Button button=dialog.findViewById(R.id.insertValueButton);
+                final TextView error=dialog.findViewById(R.id.errorMessageInInputDialog);
+                error.setVisibility(View.GONE);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String u,p;
+                        u=user.getText().toString();
+                        p=pw.getText().toString();
+                        if(Helper.validPassword(p) && Helper.validUserName(u)){
+                            try{
+                                StashDataBase.getInstance(getApplicationContext()).createAccount(u,p);
+                                list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }catch(Exception e){
+                                error.setText(e.getMessage());
+                                error.setVisibility(View.VISIBLE);
+                            }finally {
+                                //dialog.dismiss();
+                            }
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        sync=findViewById(R.id.updateAccountListImageView);
+        sync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list= StashDataBase.getInstance(getApplicationContext()).getAccountList();
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.admin, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 }

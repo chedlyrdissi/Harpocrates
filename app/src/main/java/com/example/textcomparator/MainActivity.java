@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
                 }
             }, 1000);
         }
-
-
     }
 
     @Override

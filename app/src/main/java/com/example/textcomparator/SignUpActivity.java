@@ -27,7 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StashDataBase.getInstance(getApplicationContext()).usernameExists(user.getText().toString())){
+                if (!StashDataBase.getInstance(getApplicationContext()).usernameExists(user.getText().toString())){
                     if (passwordConfirmed()){
                         StashDataBase.getInstance(getApplicationContext()).createAccount(
                                 user.getText().toString(),pw.getText().toString());

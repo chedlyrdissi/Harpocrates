@@ -26,13 +26,9 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
         setContentView(R.layout.activity_regular);
 
         list=new ArrayList<>();
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        list.add(new Piece("cont1"));
+        list.add(new Piece("cont2"));
         listFragment=PieceFragment.newInstance(2,list);
-
-        //FragmentTransaction ft = (FragmentTransaction) getFragmentManager().beginTransaction();
-        //ft.add(R.id.RegularFragmentLayout, listFragment).commit();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
