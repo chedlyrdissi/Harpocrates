@@ -1,65 +1,48 @@
 package com.example.textcomparator;
 
-import android.app.Dialog;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.telecom.StatusHints;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.drawerlayout.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.view.Window;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
-import java.sql.SQLException;
-import java.util.List;
+import androidx.fragment.app.Fragment;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private ListView listview;
-    private List<Info> list;
+    public final String NONE="none";
+    public final String ACCLIST="acclist";
+    public final String RAWQUERRY="rawqerry";
+    public final String SELECTQUERRY="selectquerry";
+
+
+    private LinearLayout adminLayout;
+    private Fragment fragment;
+
     private ArrayAdapter adapter;
-    private ImageView sqlExecutor,isqlInsertmageView,sync;
+    private Spinner spinner;
+    private String[] spinnerChoices=new String[]{NONE,ACCLIST,RAWQUERRY,SELECTQUERRY};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        listview=findViewById(R.id.AccountList);
 
-        list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-        adapter=new ArrayAdapter<>(this, R.layout.simple_list_item_custom, list);
-        listview.setAdapter(adapter);
+        adminLayout=findViewById(R.id.adminLayout);
+        spinner=findViewById(R.id.adminSpinner);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                final Dialog dialog=new Dialog(AdminActivity.this);
+        adapter =new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerChoices);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+    }
+
+}
+
+/*
+
+item dialog
+final Dialog dialog=new Dialog(AdminActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_OPTIONS_PANEL);
                 dialog.setContentView(R.layout.account_selection_layout);
 
@@ -96,50 +79,10 @@ public class AdminActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
-            }
-        });
 
-        sqlExecutor=findViewById(R.id.sqlImageView);
-        sqlExecutor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog=new Dialog(AdminActivity.this);
-                dialog.setContentView(R.layout.sql_dialog);
 
-                final EditText sql=dialog.findViewById(R.id.sqlText);
-                Button execute=dialog.findViewById(R.id.executeQuerryButton);
-                final TextView error=dialog.findViewById(R.id.errorMessageInInputDialog2);
-                error.setVisibility(View.GONE);
-
-                execute.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String querry=sql.getText().toString();
-                        try{
-                            StashDataBase.getInstance(getApplicationContext()).executeQuerry(querry);
-                            Toast.makeText(AdminActivity.this,
-                                    StashDataBase.getInstance(getApplicationContext()).listNumber(),
-                                    Toast.LENGTH_LONG).show();
-                            sync.performClick();
-                            dialog.dismiss();
-                        }catch(Exception e){
-                            Toast.makeText(getApplicationContext(),"the querry is broken",
-                                    Toast.LENGTH_SHORT).show();
-                            error.setText("the querry * "+querry+" * is broken +"+e.getMessage());
-                            error.setVisibility(View.VISIBLE);
-                        }
-
-                    }
-                });
-                dialog.show();
-            }
-        });
-
-        isqlInsertmageView=findViewById(R.id.isqlInsertmageView);
-        isqlInsertmageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog=new Dialog(AdminActivity.this);
+ insert dialog
+ final Dialog dialog=new Dialog(AdminActivity.this);
                 dialog.setContentView(R.layout.sql_insert_dialog);
 
                 final EditText user=dialog.findViewById(R.id.usernameValue);
@@ -169,19 +112,5 @@ public class AdminActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
-            }
-        });
 
-        sync=findViewById(R.id.updateAccountListImageView);
-        sync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.clear();
-                adapter.addAll(StashDataBase.getInstance(getApplicationContext()).getAccountList());
-                //list=StashDataBase.getInstance(getApplicationContext()).getAccountList();
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-}
+ */
