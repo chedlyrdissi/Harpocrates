@@ -1,14 +1,17 @@
 package com.example.textcomparator;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public final String NONE="none";
     public final String ACCLIST="acclist";
@@ -17,7 +20,9 @@ public class AdminActivity extends AppCompatActivity {
 
 
     private LinearLayout adminLayout;
+
     private Fragment fragment;
+    private FragmentManager manager;
 
     private ArrayAdapter adapter;
     private Spinner spinner;
@@ -35,8 +40,24 @@ public class AdminActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        manager=getSupportFragmentManager();
+
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String choice=spinnerChoices[position];
+        if (choice.equals(NONE)){
+            if(fragment!=null){
+                adminLayout.removeViewInLayout(fragment);
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 
 /*
