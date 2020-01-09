@@ -10,23 +10,25 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AdminActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public final String NONE="none";
     public final String ACCLIST="acclist";
     public final String RAWQUERRY="rawqerry";
-    public final String SELECTQUERRY="selectquerry";
+    public final String SELECTION="selection";
 
 
     private LinearLayout adminLayout;
 
     private Fragment fragment;
     private FragmentManager manager;
+    private FragmentTransaction transaction;
 
     private ArrayAdapter adapter;
     private Spinner spinner;
-    private String[] spinnerChoices=new String[]{NONE,ACCLIST,RAWQUERRY,SELECTQUERRY};
+    private String[] spinnerChoices=new String[]{NONE,ACCLIST,RAWQUERRY,SELECTION};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +43,24 @@ public class AdminActivity extends AppCompatActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
 
         manager=getSupportFragmentManager();
+        transaction=manager.beginTransaction();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String choice=spinnerChoices[position];
+        if(fragment!=null){
+            transaction.remove(fragment);
+        }
         if (choice.equals(NONE)){
-            if(fragment!=null){
-                adminLayout.removeViewInLayout(fragment);
-            }
+            //nothing
+        }else if (choice.equals(ACCLIST)) {
+
+        }else if (choice.equals(RAWQUERRY)) {
+
+        }else if (choice.equals(SELECTION)) {
+
         }
     }
 
