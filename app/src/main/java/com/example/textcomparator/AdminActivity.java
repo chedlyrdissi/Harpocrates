@@ -12,7 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class AdminActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import java.util.List;
+import java.util.Map;
+
+import adminfragments.AdminAccFragment;
+import adminfragments.AdminFragmentInteractionListener;
+import adminfragments.AdminRawQuerryFragment;
+import adminfragments.AdminReturnQuerryFragment;
+
+public class AdminActivity extends AppCompatActivity implements AdminFragmentInteractionListener {
 
     public final String NONE="none";
     public final String ACCLIST="acclist";
@@ -39,8 +47,40 @@ public class AdminActivity extends AppCompatActivity implements AdapterView.OnIt
         spinner=findViewById(R.id.adminSpinner);
 
         adapter =new ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerChoices);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice=spinnerChoices[position];
+                if(fragment!=null){
+                    transaction=manager.beginTransaction();
+                    transaction.remove(fragment);
+                    transaction.commit();
+                }
+
+                if (!choice.equals(NONE)){
+
+                    if (choice.equals(ACCLIST)) {
+                        fragment= AdminAccFragment.newInstance();
+                    }else if (choice.equals(RAWQUERRY)) {
+                        fragment= AdminRawQuerryFragment.newInstance();
+                    }else if (choice.equals(SELECTION)) {
+                        fragment= AdminReturnQuerryFragment.newInstance();
+                    }
+
+                    transaction=manager.beginTransaction();
+                    transaction.add(R.id.adminLayout, fragment);
+                    transaction.commit();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         manager=getSupportFragmentManager();
         transaction=manager.beginTransaction();
@@ -48,24 +88,7 @@ public class AdminActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String choice=spinnerChoices[position];
-        if(fragment!=null){
-            transaction.remove(fragment);
-        }
-        if (choice.equals(NONE)){
-            //nothing
-        }else if (choice.equals(ACCLIST)) {
-
-        }else if (choice.equals(RAWQUERRY)) {
-
-        }else if (choice.equals(SELECTION)) {
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onFragmentInteraction(List<Map<String, String>> list) {
 
     }
 }
