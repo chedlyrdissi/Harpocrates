@@ -18,7 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import com.example.textcomparator.R;
+import com.example.harpocrates.R;
 
 public class AdminReturnQuerryFragment extends Fragment {
 

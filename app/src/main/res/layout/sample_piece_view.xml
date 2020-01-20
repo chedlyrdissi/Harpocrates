@@ -6,6 +6,7 @@
     android:background="@drawable/piece_drawable">
 
     <LinearLayout
+        android:id="@+id/pieceMainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="40dp"
@@ -37,14 +38,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/InfoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:inputType="textMultiLine"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary" />
     </LinearLayout>
 
 </FrameLayout>

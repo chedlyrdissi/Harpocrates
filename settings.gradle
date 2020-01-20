@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='text comparator'
+rootProject.name='Harpocrates'

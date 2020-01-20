@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package piece;
 
 import android.os.Build;
 

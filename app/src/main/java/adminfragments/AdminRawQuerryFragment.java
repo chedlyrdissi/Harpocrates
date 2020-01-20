@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.textcomparator.R;
+import com.example.harpocrates.R;
 
 public class AdminRawQuerryFragment extends Fragment {
 
