@@ -1,6 +1,6 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
-public class Helper {
+public class    Helper {
     //TODO
     public static boolean validUserName(String username) {
         return username!=null;

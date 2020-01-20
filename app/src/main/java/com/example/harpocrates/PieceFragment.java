@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+
+import piece.Piece;
 
 /**
  * A fragment representing a list of Items.

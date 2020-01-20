@@ -1,3 +1,3 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 enum AccountType {regular,admin,irregular}

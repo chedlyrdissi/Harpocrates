@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 import android.content.ContentValues;
 import android.content.Context;

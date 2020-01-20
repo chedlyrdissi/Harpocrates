@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 public class IncorrectPasswordException extends Exception {
     public IncorrectPasswordException(){

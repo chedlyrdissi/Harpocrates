@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 import android.database.DataSetObserver;
 import android.view.View;

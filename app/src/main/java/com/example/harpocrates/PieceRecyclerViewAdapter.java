@@ -1,4 +1,4 @@
-package com.example.textcomparator;
+package com.example.harpocrates;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.textcomparator.PieceFragment.OnListFragmentInteractionListener;
+import com.example.harpocrates.PieceFragment.OnListFragmentInteractionListener;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import piece.Piece;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Piece} and makes a call to the
@@ -40,7 +41,7 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
         holder.piece = mValues.get(position);
         //setting the values for the texts
         holder.contextTextView.setText(mValues.get(position).getContext());
-        holder.infoTextView.setText(mValues.get(position).getInfoString());
+        //holder.infoTextView.setText(mValues.get(position).getInfoString());
 
         holder.frame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +65,14 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
 
         public View frame;
         public final TextView contextTextView;
-        public final TextView infoTextView;
+        //public final TextView infoTextView;
         public Piece piece;
 
         public ViewHolder(View view) {
             super(view);
             frame=view;
             contextTextView = view.findViewById(R.id.ContextTextView);
-            infoTextView = view.findViewById(R.id.InfoTextView);
+            //infoTextView = view.findViewById(R.id.InfoTextView);
         }
 
         @Override
