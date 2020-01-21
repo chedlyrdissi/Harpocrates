@@ -27,9 +27,9 @@ public class InternalHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
-                TABLE_ACCOUNT + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
-                + " TEXT," + COLUMN_PASSWORD + " TEXT, "+COLUMN_INFOID+" Integer FOREIGN KEY )";
+                TABLE_ACCOUNT + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
+                + " TEXT," + COLUMN_PASSWORD + " TEXT, "+COLUMN_INFOID+" Integer )";
+
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
