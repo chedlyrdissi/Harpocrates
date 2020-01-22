@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import piece.Piece;
+import piece.PieceRecyclerViewAdapter;
 
 /**
  * A fragment representing a list of Items.
@@ -75,7 +76,7 @@ public class PieceFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter=new PieceRecyclerViewAdapter( pieces, mListener);
+            adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
             recyclerView.setAdapter(adapter);
             Piece piece;
             for (int i=0;i<5;i++){

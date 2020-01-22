@@ -84,6 +84,12 @@ public class Piece {
 
     }
 
+    public String getItemInfo( int i ) {
+        return items.get(i).getValue();
+    }
+
+    public int itemCount() {return items.size();}
+
     //******************************************//
     //      validation methods                  //
     //******************************************//

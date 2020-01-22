@@ -89,6 +89,7 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
 
     @Override
     public void onListFragmentInteraction(Piece piece) {
+        /*
         final Dialog dialog=new Dialog(RegularActivity.this);
         dialog.setContentView(R.layout.piece_modifier_dialog);
 
@@ -122,6 +123,6 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
         }
 
         dialog.show();
-
+        */
     }
 }
