@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import piece.Piece;
+import piece.PieceRecyclerViewAdapter;
 
-public class RegularActivity extends AppCompatActivity implements PieceFragment.OnListFragmentInteractionListener {
+public class RegularActivity extends AppCompatActivity {
 
     private PieceFragment listFragment;
     private Toolbar toolbar;
@@ -34,18 +36,32 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
         setContentView(R.layout.activity_regular);
 
         list=new ArrayList<>();
+        Piece piece;
+
+        for (int i=0; i<5; i++) {
+
+            piece=new Piece("Title " + i );
+            for ( int j=0; j<5; j++) {
+                piece.add( "key" + j, "value" +j );
+            }
+
+            list.add(piece);
+
+        }
 
         if (findViewById(R.id.RegularFragmentLayout) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
+            /*
             if (savedInstanceState != null) {
                 return;
             }
+             */
 
             // Create a new Fragment to be placed in the activity layout
-            listFragment=PieceFragment.newInstance(2,list);
+            listFragment=new PieceFragment(list);
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
@@ -87,8 +103,6 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
         listFragment.sync();
     }
 
-    @Override
-    public void onListFragmentInteraction(Piece piece) {
         /*
         final Dialog dialog=new Dialog(RegularActivity.this);
         dialog.setContentView(R.layout.piece_modifier_dialog);
@@ -124,5 +138,5 @@ public class RegularActivity extends AppCompatActivity implements PieceFragment.
 
         dialog.show();
         */
-    }
+
 }

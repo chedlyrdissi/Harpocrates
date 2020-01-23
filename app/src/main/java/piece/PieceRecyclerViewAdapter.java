@@ -2,7 +2,6 @@ package piece;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +22,11 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
     private List<Piece> pieces;
     private Context context;
 
-    public PieceRecyclerViewAdapter(Context context,List<Piece> pieces){
+    public PieceRecyclerViewAdapter( Context context, List<Piece> pieces ){
+
         this.pieces=pieces;
         this.context=context;
+
     }
 
     @NonNull
@@ -38,8 +39,8 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
 
     @Override
     public void onBindViewHolder(@NonNull PieceViewHolder holder, int position) {
-        holder.titleTextView.setText(pieces.get(position).gettitle());
-        holder.items=pieces.get(position).getItems();
+        holder.setTitleTextView( pieces.get(position).gettitle() );
+        holder.setInfo( pieces.get(position).getItems() );
     }
 
     @Override
@@ -70,47 +71,85 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
             pieceInformationLayout=itemView.findViewById(R.id.pieceInformationLayout);
             infoItems=new ArrayList<>();
 
-            TextImageListener listener=new TextImageListener();
-            arrowImageView.setOnClickListener(listener);
-            titleTextView.setOnClickListener(listener);
+            arrowImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    performArrowImageClick();
+                }
+            });
+            titleTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    performArrowImageClick();
+                }
+            });
 
         }
 
-        public void initializeInfo(){
+        /**
+         * if the piece arrow is down show the info
+         * otherwise hide the shown info
+         */
+        public void performArrowImageClick() {
 
-            infoItems.clear();
-
-            for ( int i=0; i<items.size(); i++ ){
-
-                infoItems.add( new TextView(context) );
-                infoItems.get(i).setText( items.get(i).getKey() + " = " + items.get(i).getValue() );
-                infoItems.get(i).setTextColor(Color.WHITE);
-                pieceInformationLayout.addView(infoItems.get(i));
+            if ( arrowdown ) {
+                showInfoItems();
+            } else {
+                hideInfoItems();
             }
+            arrowdown=!arrowdown;
 
         }
 
-        public class TextImageListener implements View.OnClickListener{
+        public void showInfoItems() {
 
-            @Override
-            public void onClick(View view) {
+            arrowImageView.setImageResource(UP);
+            pieceInformationLayout.setVisibility(View.VISIBLE);
+            clearInfo();
 
-                if ( arrowdown ) {
+            if ( items != null ) {
+                for ( int i=0; i<items.size(); i++ ) {
 
-                    arrowImageView.setImageResource(UP);
-                    initializeInfo();
-                    pieceInformationLayout.setVisibility(View.VISIBLE);
-
-                } else {
-
-                    arrowImageView.setImageResource(DOWN);
-                    pieceInformationLayout.setVisibility(View.GONE);
-                    infoItems.clear();
+                    infoItems.add( new TextView(context) );
+                    infoItems.get(i).setText( items.get(i).getKey() + " = " + items.get(i).getValue() );
+                    infoItems.get(i).setTextColor(Color.WHITE);
+                    pieceInformationLayout.addView(infoItems.get(i));
 
                 }
-
-                arrowdown=!arrowdown;
             }
+
+        }
+
+        public void hideInfoItems() {
+            arrowImageView.setImageResource(DOWN);
+            pieceInformationLayout.setVisibility(View.GONE);
+            clearInfo();
+        }
+
+        /**
+         * prepares the list of TextViews that hold the info to put in the piece
+         */
+        public void setInfo( List<Entry> items ){
+            this.items=items;
+        }
+
+        public void clearInfo() {
+            infoItems.clear();
+            pieceInformationLayout.removeAllViewsInLayout();
+        }
+
+        public void updateInfoItems( List<Entry> items ) {
+
+            this.items=items;
+            showInfoItems();
+
+        }
+
+        public void setTitleTextView(String title){
+
+            if ( title != null )
+                titleTextView.setText(title);
+
         }
 
     }

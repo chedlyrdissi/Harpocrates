@@ -8,13 +8,6 @@
     android:background="@drawable/wolhaiksong_crest"
     tools:context=".RegularActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
     <FrameLayout
         android:id="@+id/RegularFragmentLayout"
         android:layout_width="match_parent"
