@@ -1,92 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/wolhaiksong_crest"
-    android:orientation="vertical"
-    tools:context=".SignUpActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:gravity="center"
-        android:text="Come and join us"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorSecondary"
-        android:textSize="36sp"
-        android:textStyle="bold|italic" />
-
-    <LinearLayout
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/defaultdrawable"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/wolhaiksong_crest"
+        tools:context=".SignUpActivity">
 
-        <EditText
-            android:id="@+id/usernameField"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorBack"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="username"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary" />
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/passwordField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorBack"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="password"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:text="Come and join us"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorSecondary"
+                android:textSize="36sp"
+                android:textStyle="bold|italic" />
 
-        <EditText
-            android:id="@+id/confirmPasswordField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorBack"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="confirm password"
-            android:inputType="textPersonName"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary" />
+            <EditText
+                android:id="@+id/usernameField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorBack"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="username"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary" />
+
+            <EditText
+                android:id="@+id/passwordField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorBack"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="password"
+                android:inputType="textPersonName|textPassword"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary" />
+
+            <EditText
+                android:id="@+id/confirmPasswordField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorBack"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="confirm password"
+                android:inputType="textPersonName|textPassword"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary" />
 
         <Button
-            android:id="@+id/signUpButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@color/colorBack"
-            android:text="sign up"
-            android:textColor="@color/colorSecondary"
-            android:textColorHint="@color/colorSecondary" />
-    </LinearLayout>
-</LinearLayout>
+                android:id="@+id/signUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@color/colorBack"
+                android:text="sign up"
+                android:textColor="@color/colorSecondary"
+                android:textColorHint="@color/colorSecondary" />
+        </LinearLayout>
+</ScrollView>

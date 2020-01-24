@@ -43,6 +43,7 @@ public class PieceFragment extends Fragment {
 
     public PieceFragment( List<Piece> pieces, int layout ) {
         this.pieces=pieces;
+        adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
         switch ( layout ) {
             case LINEAR_LAYOUT_VERTICAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
                                             break;
@@ -52,7 +53,6 @@ public class PieceFragment extends Fragment {
                                             break;
             case GRID_LAYOUT_3_COL:         manager=new GridLayoutManager(getContext(),GRID_LAYOUT_3_COL);
                                             break;
-
         }
     }
 
@@ -65,16 +65,11 @@ public class PieceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_piece_list, container, false);
-
         // Set the adapter
-        if (view instanceof RecyclerView) {
-
-            recyclerView = (RecyclerView) view;
-            adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-
+        recyclerView = view.findViewById(R.id.pieceList);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        
         return view;
     }
 

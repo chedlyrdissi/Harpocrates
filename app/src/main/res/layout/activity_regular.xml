@@ -9,7 +9,7 @@
     tools:context=".RegularActivity">
 
     <FrameLayout
-        android:id="@+id/RegularFragmentLayout"
+        android:id="@+id/regularFragmentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="130dp"

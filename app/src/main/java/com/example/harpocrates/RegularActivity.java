@@ -39,33 +39,16 @@ public class RegularActivity extends AppCompatActivity {
         Piece piece;
 
         for (int i=0; i<5; i++) {
-
             piece=new Piece("Title " + i );
             for ( int j=0; j<5; j++) {
                 piece.add( "key" + j, "value" +j );
             }
-
             list.add(piece);
-
         }
 
-        if (findViewById(R.id.RegularFragmentLayout) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            /*
-            if (savedInstanceState != null) {
-                return;
-            }
-             */
-
-            // Create a new Fragment to be placed in the activity layout
+        if ( listFragment != null ) {
             listFragment=new PieceFragment(list);
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.RegularFragmentLayout, listFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.regularFragmentLayout, listFragment).commit();
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);

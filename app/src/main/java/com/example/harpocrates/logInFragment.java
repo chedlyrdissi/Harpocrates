@@ -1,12 +1,10 @@
 package com.example.harpocrates;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,29 +15,16 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link logInFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link logInFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class logInFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
     private EditText username;
-    private ImageView usernameOrbGreen;
-    private ImageView usernameOrbRed;
+    private ImageView usernameOrb;
 
     private EditText password;
-    private ImageView passwordOrbGreen;
-    private ImageView passwordOrbRed;
+    private ImageView passwordOrb;
 
     private Button unlockButton,signupbutton;
 
@@ -73,12 +58,10 @@ public class logInFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_log_in, container, true);
 
         username=           view.findViewById(R.id.username);
-        usernameOrbGreen=   view.findViewById(R.id.usernameOrbGreen);
-        usernameOrbRed=     view.findViewById(R.id.usernameOrbRed);
+        usernameOrb=   view.findViewById(R.id.usernameOrb);
 
         password=           view.findViewById(R.id.password);
-        passwordOrbGreen=   view.findViewById(R.id.passwordOrbGreen);
-        passwordOrbRed=     view.findViewById(R.id.passwordOrbRed);
+        passwordOrb=   view.findViewById(R.id.passwordOrb);
 
         unlockButton=       view.findViewById(R.id.unlockButton);
         signupbutton=       view.findViewById(R.id.createAccountButton);
@@ -97,11 +80,8 @@ public class logInFragment extends Fragment {
             }
         });
 
-        usernameOrbGreen.setVisibility(View.INVISIBLE);
-        usernameOrbRed.setVisibility(View.INVISIBLE);
-
-        passwordOrbGreen.setVisibility(View.INVISIBLE);
-        passwordOrbRed.setVisibility(View.INVISIBLE);
+        usernameOrb.setVisibility(View.GONE);
+        passwordOrb.setVisibility(View.GONE);
 
         return view;
     }
@@ -125,10 +105,8 @@ public class logInFragment extends Fragment {
         username.setText("");
         password.setText("");
 
-        usernameOrbGreen.setVisibility(View.INVISIBLE);
-        passwordOrbGreen.setVisibility(View.INVISIBLE);
-        usernameOrbRed.setVisibility(View.INVISIBLE);
-        passwordOrbRed.setVisibility(View.INVISIBLE);
+        usernameOrb.setVisibility(View.GONE);
+        passwordOrb.setVisibility(View.GONE);
     }
 
     public void unlockButtonClick(){
@@ -145,10 +123,11 @@ public class logInFragment extends Fragment {
                 StashDataBase.getInstance(getContext()).authenticate(username.getText().toString(),
                         password.getText().toString());
 
-                usernameOrbGreen.setVisibility(View.VISIBLE);
-                passwordOrbGreen.setVisibility(View.VISIBLE);
-                usernameOrbRed.setVisibility(View.INVISIBLE);
-                passwordOrbRed.setVisibility(View.INVISIBLE);
+                usernameOrb.setVisibility(View.VISIBLE);
+                passwordOrb.setVisibility(View.VISIBLE);
+
+                usernameOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
+                passwordOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 
                 mListener.onFragmentInteraction(username.getText().toString(),
                         password.getText().toString());
@@ -157,21 +136,19 @@ public class logInFragment extends Fragment {
 
                 Snackbar.make(unlockButton,e.getMessage(),Snackbar.LENGTH_SHORT).show();
 
-                usernameOrbGreen.setVisibility(View.INVISIBLE);
-                usernameOrbRed.setVisibility(View.VISIBLE);
+                usernameOrb.setImageDrawable(getResources().getDrawable(R.drawable.error));
+                usernameOrb.setVisibility(View.VISIBLE);
 
-                passwordOrbGreen.setVisibility(View.INVISIBLE);
-                passwordOrbRed.setVisibility(View.INVISIBLE);
+                passwordOrb.setVisibility(View.GONE);
 
             }catch (IncorrectPasswordException e){
 
                 Snackbar.make(unlockButton,e.getMessage(),Snackbar.LENGTH_SHORT).show();
 
-                usernameOrbGreen.setVisibility(View.VISIBLE);
-                usernameOrbRed.setVisibility(View.INVISIBLE);
+                passwordOrb.setImageDrawable(getResources().getDrawable(R.drawable.error));
+                passwordOrb.setVisibility(View.VISIBLE);
 
-                passwordOrbGreen.setVisibility(View.INVISIBLE);
-                passwordOrbRed.setVisibility(View.VISIBLE);
+                usernameOrb.setVisibility(View.GONE);
 
             }
         }
