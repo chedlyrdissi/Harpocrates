@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.harpocrates.R;
@@ -23,6 +24,7 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
     private Context context;
 
     public PieceRecyclerViewAdapter( Context context, List<Piece> pieces ){
+        super();
 
         this.pieces=pieces;
         this.context=context;
@@ -31,22 +33,24 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
 
     @NonNull
     @Override
-    public PieceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PieceRecyclerViewAdapter.PieceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_piece_view,parent,false);
 
-        return new PieceViewHolder( v, pieces.get(viewType).getItems() );
+        return new PieceViewHolder( v );
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PieceViewHolder holder, int position) {
-        holder.setTitleTextView( pieces.get(position).gettitle() );
-        holder.setInfo( pieces.get(position).getItems() );
+    public void onBindViewHolder(@NonNull PieceRecyclerViewAdapter.PieceViewHolder holder, int position) {
+        holder.itemView.setTag( pieces.get( position ) );
+        holder.updateViewHolder( context );
     }
 
     @Override
     public int getItemCount() {
         return pieces.size();
     }
+
+
 
     public class PieceViewHolder extends RecyclerView.ViewHolder{
 
@@ -59,12 +63,9 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
         ImageView arrowImageView;
         LinearLayout pieceInformationLayout;
         List<TextView> infoItems;
-        List<Entry> items;
 
-        public PieceViewHolder(@NonNull View itemView,List<Entry> items) {
+        public PieceViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            this.items=items;
 
             titleTextView=itemView.findViewById(R.id.TitleTextView);
             arrowImageView=itemView.findViewById(R.id.ArrowImageView);
@@ -90,66 +91,42 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
          * if the piece arrow is down show the info
          * otherwise hide the shown info
          */
-        public void performArrowImageClick() {
+        private void performArrowImageClick() {
 
             if ( arrowdown ) {
-                showInfoItems();
+                pieceInformationLayout.setVisibility(View.VISIBLE);
+                arrowImageView.setImageDrawable( ContextCompat.getDrawable( context, UP ) );
             } else {
-                hideInfoItems();
+                pieceInformationLayout.setVisibility(View.GONE);
+                arrowImageView.setImageDrawable( ContextCompat.getDrawable( context, DOWN ) );
             }
             arrowdown=!arrowdown;
 
         }
 
-        public void showInfoItems() {
-
-            arrowImageView.setImageResource(UP);
-            pieceInformationLayout.setVisibility(View.VISIBLE);
-            clearInfo();
-
-            if ( items != null ) {
-                for ( int i=0; i<items.size(); i++ ) {
-
-                    infoItems.add( new TextView(context) );
-                    infoItems.get(i).setText( items.get(i).getKey() + " = " + items.get(i).getValue() );
-                    infoItems.get(i).setTextColor(Color.WHITE);
-                    pieceInformationLayout.addView(infoItems.get(i));
-
-                }
-            }
-
-        }
-
-        public void hideInfoItems() {
-            arrowImageView.setImageResource(DOWN);
-            pieceInformationLayout.setVisibility(View.GONE);
-            clearInfo();
-        }
-
-        /**
-         * prepares the list of TextViews that hold the info to put in the piece
-         */
-        public void setInfo( List<Entry> items ){
-            this.items=items;
-        }
-
-        public void clearInfo() {
+        private void clearInfo() {
             infoItems.clear();
             pieceInformationLayout.removeAllViewsInLayout();
         }
 
-        public void updateInfoItems( List<Entry> items ) {
+        public void updateViewHolder( Context context) {
+            if ( itemView.getTag() != null ) {
+                Piece piece = (Piece) itemView.getTag();
+                titleTextView.setText( piece.gettitle() );
+                clearInfo();
 
-            this.items=items;
-            showInfoItems();
+                for ( int i=0; i<piece.getItems().size(); i++ ) {
+                    infoItems.add( new TextView(context) );
+                    infoItems.get(i).setText( piece.get(i).toString() );
+                    infoItems.get(i).setBackgroundColor( ContextCompat.getColor(context,android.R.color.transparent) );
+                    infoItems.get(i).setTextColor( Color.WHITE );
+                    pieceInformationLayout.addView( infoItems.get(i) );
+                }
 
-        }
+                pieceInformationLayout.setVisibility( View.GONE );
+            } else {
 
-        public void setTitleTextView(String title){
-
-            if ( title != null )
-                titleTextView.setText(title);
-
+            }
         }
 
     }

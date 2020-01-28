@@ -19,6 +19,13 @@
         android:textColor="@color/colorSecondary"
         android:textStyle="bold|italic" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMainAct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        tools:listitem="@layout/sample_piece_view" />
+
     <fragment
         android:id="@+id/fragment2"
         android:name="com.example.harpocrates.logInFragment"

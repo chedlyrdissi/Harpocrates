@@ -88,6 +88,8 @@ public class Piece {
         return items.get(i).getValue();
     }
 
+    public Entry get( int i ) { return items.get(i); }
+
     public int itemCount() {return items.size();}
 
     //******************************************//

@@ -1,6 +1,8 @@
 package com.example.harpocrates;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,10 +29,33 @@ import piece.PieceRecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity implements logInFragment.OnFragmentInteractionListener {
 
+
+    RecyclerView recycler;
+    PieceRecyclerViewAdapter adapter;
+
+    /*
+    ArrayAdapter adapter;
+    ListView recycler;
+    */
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recycler=findViewById(R.id.recyclerMainAct);
+        recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter=new PieceRecyclerViewAdapter(getApplicationContext(),Helper.createDummyList(7,2));
+        recycler.setAdapter(adapter);
+
+        /*
+        ArrayList<String> list=new ArrayList<>();
+        for (int i=0;i<20; i++) list.add("playing around with the list "+i);
+        adapter=new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,list);
+        recycler.setAdapter(adapter);
+        */
+
+
     }
 
     @Override
