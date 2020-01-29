@@ -27,8 +27,9 @@ public class    Helper {
         for (int j=0; j<items; j++) {
             piece=new Piece("title"+j);
             for (int o=0; o<values ; o++) {
-                piece.add("key"+j,"value"+j);
+                piece.add("key"+o,"value"+o);
             }
+            list.add(piece);
         }
         return list;
     }

@@ -43,18 +43,7 @@ public class PieceFragment extends Fragment {
     }
 
     public PieceFragment( List<Piece> pieces, int layout ) {
-        this.pieces=pieces;
-        adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
-        switch ( layout ) {
-            case LINEAR_LAYOUT_VERTICAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-                                            break;
-            case LINEAR_LAYOUT_HORIZONTAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-                                            break;
-            case GRID_LAYOUT_2_COL:         manager=new GridLayoutManager(getContext(),GRID_LAYOUT_2_COL);
-                                            break;
-            case GRID_LAYOUT_3_COL:         manager=new GridLayoutManager(getContext(),GRID_LAYOUT_3_COL);
-                                            break;
-        }
+        initializeFragment(pieces,layout);
     }
 
     @Override
@@ -66,17 +55,49 @@ public class PieceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //List<Piece> list;
+        //RecyclerView.LayoutManager manager;
+
+        if ( savedInstanceState != null
+                && savedInstanceState.getBundle("list") != null
+                && savedInstanceState.getBundle("list").get("pieces") != null ) {
+            //list = (List<Piece>) savedInstanceState.getBundle("list").get("pieces");
+            initializeFragment( (List<Piece>) savedInstanceState.getBundle("list").get("pieces") );
+        } else {
+            //list = new ArrayList<Piece>();
+            initializeFragment( new ArrayList<Piece>() );
+        }
+
         View view = inflater.inflate(R.layout.fragment_piece_list, container, false);
-        // Set the adapter
         recyclerView = view.findViewById(R.id.pieceList);
+        recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         return view;
     }
 
+    public void initializeFragment( List<Piece> pieces, int layout ) {
+        this.pieces=pieces;
+        adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
+        switch ( layout ) {
+            case LINEAR_LAYOUT_VERTICAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+                break;
+            case LINEAR_LAYOUT_HORIZONTAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+                break;
+            case GRID_LAYOUT_2_COL:         manager=new GridLayoutManager(getContext(),GRID_LAYOUT_2_COL);
+                break;
+            case GRID_LAYOUT_3_COL:         manager=new GridLayoutManager(getContext(),GRID_LAYOUT_3_COL);
+                break;
+        }
+    }
+
+    public void initializeFragment( List<Piece> pieces) {
+        initializeFragment(pieces,LINEAR_LAYOUT_VERTICAL);
+    }
+
     public void setList(List<Piece> list){
         this.pieces=list;
+        adapter.setPieces(list);
         adapter.notifyDataSetChanged();
     }
 

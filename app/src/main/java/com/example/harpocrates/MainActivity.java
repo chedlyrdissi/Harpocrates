@@ -29,32 +29,17 @@ import piece.PieceRecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity implements logInFragment.OnFragmentInteractionListener {
 
+    List<Piece> piecelist=Helper.createDummyList(20,2);
+    PieceFragment frag;
 
-    RecyclerView recycler;
-    PieceRecyclerViewAdapter adapter;
-
-    /*
-    ArrayAdapter adapter;
-    ListView recycler;
-    */
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recycler=findViewById(R.id.recyclerMainAct);
-        recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter=new PieceRecyclerViewAdapter(getApplicationContext(),Helper.createDummyList(7,2));
-        recycler.setAdapter(adapter);
-
-        /*
-        ArrayList<String> list=new ArrayList<>();
-        for (int i=0;i<20; i++) list.add("playing around with the list "+i);
-        adapter=new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,list);
-        recycler.setAdapter(adapter);
-        */
-
+        frag = (PieceFragment) getSupportFragmentManager().findFragmentById(R.id.dummytest);
+        frag.initializeFragment(piecelist);
 
     }
 

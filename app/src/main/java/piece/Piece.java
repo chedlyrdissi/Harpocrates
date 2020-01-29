@@ -92,6 +92,14 @@ public class Piece {
 
     public int itemCount() {return items.size();}
 
+    public String infoToString() {
+        StringBuilder builder=new StringBuilder();
+        for ( Entry e:items) {
+            builder.append(e.getKey()+ "=" + e.getValue() + "\n");
+        }
+        return builder.toString();
+    }
+
     //******************************************//
     //      validation methods                  //
     //******************************************//

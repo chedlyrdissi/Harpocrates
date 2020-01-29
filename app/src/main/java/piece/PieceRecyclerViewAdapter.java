@@ -18,7 +18,7 @@ import com.example.harpocrates.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecyclerViewAdapter.PieceViewHolder> {
+public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecyclerViewAdapter.ViewHolder> {
 
     private List<Piece> pieces;
     private Context context;
@@ -33,14 +33,14 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
 
     @NonNull
     @Override
-    public PieceRecyclerViewAdapter.PieceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_piece_view,parent,false);
+    public PieceRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new PieceViewHolder( v );
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_piece_view,parent,false);
+        return new ViewHolder( v );
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PieceRecyclerViewAdapter.PieceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PieceRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.itemView.setTag( pieces.get( position ) );
         holder.updateViewHolder( context );
     }
@@ -50,9 +50,13 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
         return pieces.size();
     }
 
+    public void setPieces( List<Piece> list ) {
+        this.pieces = list;
+        notifyDataSetChanged();
+    }
 
 
-    public class PieceViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         protected static final int DOWN=R.drawable.arrow_down;
         protected static final int UP=R.drawable.arrow_up;
@@ -64,7 +68,8 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
         LinearLayout pieceInformationLayout;
         List<TextView> infoItems;
 
-        public PieceViewHolder(@NonNull View itemView) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleTextView=itemView.findViewById(R.id.TitleTextView);
@@ -91,6 +96,7 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
          * if the piece arrow is down show the info
          * otherwise hide the shown info
          */
+
         private void performArrowImageClick() {
 
             if ( arrowdown ) {
