@@ -3,9 +3,6 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:background="@color/colorBack"
-    android:ellipsize="marquee"
+    android:gravity="center"
     android:padding="15dp"
-    android:singleLine="true"
     android:textColor="@color/colorSecondary" />

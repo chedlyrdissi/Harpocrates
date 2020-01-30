@@ -20,7 +20,7 @@ import android.widget.Spinner;
 
 import com.example.harpocrates.R;
 
-public class AdminReturnQuerryFragment extends Fragment {
+public class AdminSelectionFragment extends Fragment {
 
     private static final String UPDATE="update";
     private static final String SELECT="select";
@@ -48,12 +48,12 @@ public class AdminReturnQuerryFragment extends Fragment {
 
     private Button execute;
 
-    public AdminReturnQuerryFragment() {
+    public AdminSelectionFragment() {
         // Required empty public constructor
     }
 
-    public static AdminReturnQuerryFragment newInstance() {
-        AdminReturnQuerryFragment fragment = new AdminReturnQuerryFragment();
+    public static AdminSelectionFragment newInstance() {
+        AdminSelectionFragment fragment = new AdminSelectionFragment();
         return fragment;
     }
 
@@ -66,10 +66,10 @@ public class AdminReturnQuerryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_admin_return_querry, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_selection, container, false);
 
         selectionSpinner= view.findViewById(R.id.updateInsertSpinner);
-        adapter =new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,choices);
+        adapter =new ArrayAdapter(getContext(),R.layout.spinner_item,choices);
         adapter.setDropDownViewResource(R.layout.spinner_item);
         selectionSpinner.setAdapter(adapter);
 

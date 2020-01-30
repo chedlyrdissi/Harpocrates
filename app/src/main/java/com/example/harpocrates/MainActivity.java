@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        frag = (PieceFragment) getSupportFragmentManager().findFragmentById(R.id.dummytest);
-        frag.initializeFragment(piecelist);
+        // frag = new PieceFragment(piecelist);
+        // getSupportFragmentManager().beginTransaction().add(R.id.pieceMainLayout,frag).commit();
 
     }
 

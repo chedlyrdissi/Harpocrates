@@ -14,16 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:gravity="center"
-        android:text="welcome to the treasure chest"
+        android:text="@string/welcome_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorSecondary"
         android:textStyle="bold|italic" />
-
-    <fragment
-        android:id="@+id/dummytest"
-        android:name="com.example.harpocrates.PieceFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <fragment
         android:id="@+id/fragment2"

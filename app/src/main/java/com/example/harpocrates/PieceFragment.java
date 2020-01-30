@@ -77,6 +77,10 @@ public class PieceFragment extends Fragment {
     }
 
     public void initializeFragment( List<Piece> pieces, int layout ) {
+        if ( pieces == null ) {
+            pieces = new ArrayList<>();
+        }
+
         this.pieces=pieces;
         adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
         switch ( layout ) {
