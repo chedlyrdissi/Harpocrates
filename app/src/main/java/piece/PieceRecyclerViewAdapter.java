@@ -130,8 +130,6 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
                 }
 
                 pieceInformationLayout.setVisibility( View.GONE );
-            } else {
-
             }
         }
 

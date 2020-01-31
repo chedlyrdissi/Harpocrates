@@ -35,21 +35,14 @@ public class RegularActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular);
 
-        list=new ArrayList<>();
-        Piece piece;
-
-        for (int i=0; i<5; i++) {
-            piece=new Piece("Title " + i );
-            for ( int j=0; j<5; j++) {
-                piece.add( "key" + j, "value" +j );
-            }
-            list.add(piece);
-        }
+        list = Helper.createDummyList(30,5);
 
         if ( listFragment != null ) {
-            listFragment=new PieceFragment(list);
-            getSupportFragmentManager().beginTransaction().add(R.id.regularFragmentLayout, listFragment).commit();
+            getSupportFragmentManager().beginTransaction().remove(listFragment).commit();
         }
+
+        listFragment=new PieceFragment(list);
+        getSupportFragmentManager().beginTransaction().add(R.id.regularFragmentLayout, listFragment).commit();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

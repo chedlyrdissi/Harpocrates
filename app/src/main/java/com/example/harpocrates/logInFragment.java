@@ -102,16 +102,17 @@ public class logInFragment extends Fragment {
         super.onDetach();
         mListener = null;
 
+        clearLogInFragmentInfo();
+    }
+
+    public void clearLogInFragmentInfo() {
         username.setText("");
         password.setText("");
-
         usernameOrb.setVisibility(View.GONE);
         passwordOrb.setVisibility(View.GONE);
     }
 
     public void unlockButtonClick(){
-
-        Toast.makeText(getContext(),""+StashDataBase.getInstance(getContext()).listNumber(),Toast.LENGTH_SHORT).show();
 
         if (StashDataBase.getInstance(getContext()).isGod(username.getText().toString(),
                 password.getText().toString())){
@@ -152,8 +153,9 @@ public class logInFragment extends Fragment {
 
             }
         }
-
     }
+
+
 
 
     /**

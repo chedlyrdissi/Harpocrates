@@ -55,9 +55,7 @@ public class PieceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //List<Piece> list;
-        //RecyclerView.LayoutManager manager;
-
+        /*
         if ( savedInstanceState != null
                 && savedInstanceState.getBundle("list") != null
                 && savedInstanceState.getBundle("list").get("pieces") != null ) {
@@ -66,12 +64,11 @@ public class PieceFragment extends Fragment {
         } else {
             //list = new ArrayList<Piece>();
             initializeFragment( new ArrayList<Piece>() );
-        }
+        }*/
 
         View view = inflater.inflate(R.layout.fragment_piece_list, container, false);
         recyclerView = view.findViewById(R.id.pieceList);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -82,7 +79,7 @@ public class PieceFragment extends Fragment {
         }
 
         this.pieces=pieces;
-        adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
+
         switch ( layout ) {
             case LINEAR_LAYOUT_VERTICAL:    manager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
                 break;
@@ -113,6 +110,13 @@ public class PieceFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter=new PieceRecyclerViewAdapter( getContext() ,pieces);
+        recyclerView.setAdapter(adapter);
     }
 
     //TODO

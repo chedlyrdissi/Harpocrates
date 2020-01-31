@@ -1,8 +1,6 @@
-package com.example.harpocrates;
+package com.example.harpocrates.user;
 
 import android.content.Intent;
-
-import com.example.harpocrates.user.User;
 
 class UserBean {
 

@@ -32,15 +32,27 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
     List<Piece> piecelist=Helper.createDummyList(20,2);
     PieceFragment frag;
 
+    private logInFragment loginfrag;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loginfrag = ( logInFragment ) getSupportFragmentManager().findFragmentById( R.id.welcomeLogInFragment );
+    }
 
-        // frag = new PieceFragment(piecelist);
-        // getSupportFragmentManager().beginTransaction().add(R.id.pieceMainLayout,frag).commit();
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+        if ( loginfrag != null ) {
+            clearLogInFragmentInfo();
+        }
+    }
+
+    protected void clearLogInFragmentInfo() {
+        loginfrag.clearLogInFragmentInfo();
     }
 
     @Override
