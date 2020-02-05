@@ -22,8 +22,9 @@ import java.util.Map;
 
 import piece.Piece;
 import piece.PieceRecyclerViewAdapter;
+import piece.PieceViewDialogContext;
 
-public class RegularActivity extends AppCompatActivity {
+public class RegularActivity extends AppCompatActivity implements PieceViewDialogContext {
 
     private PieceFragment listFragment;
     private Toolbar toolbar;
@@ -77,6 +78,16 @@ public class RegularActivity extends AppCompatActivity {
 
     public void sync(){
         listFragment.sync();
+    }
+
+    @Override
+    public boolean isValidKey(String key) {
+        return false;
+    }
+
+    @Override
+    public boolean isValidValue(String value) {
+        return false;
     }
 
         /*

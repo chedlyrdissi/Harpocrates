@@ -40,9 +40,17 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PieceRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PieceRecyclerViewAdapter.ViewHolder holder, final int position) {
         holder.itemView.setTag( pieces.get( position ) );
         holder.updateViewHolder( context );
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                PieceViewDialog dialog = new PieceViewDialog( context, pieces.get( position ) );
+                dialog.show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -89,7 +97,6 @@ public class PieceRecyclerViewAdapter extends RecyclerView.Adapter<PieceRecycler
                     performArrowImageClick();
                 }
             });
-
         }
 
         /**

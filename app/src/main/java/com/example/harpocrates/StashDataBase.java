@@ -8,11 +8,11 @@ import java.util.List;
 public class StashDataBase {
 
     private static StashDataBase instance;
-    private static InternalHandler internaldb;
+    private static AccountDM accountDM;
 
     private StashDataBase(Context context){
       //  dummy=new DummyDataBase();
-        internaldb=new InternalHandler(context);
+        accountDM=new AccountDM(context);
     }
 
     public static StashDataBase getInstance(Context context){
@@ -25,8 +25,8 @@ public class StashDataBase {
     public void authenticate(String username,String password) throws
             IncorrectPasswordException,IncorrectUsernameException{
         //TODO
-        if(!internaldb.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
-        String pw=internaldb.getPassword(username);
+        if(!accountDM.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
+        String pw=accountDM.getPassword(username);
         if(pw==null || password==null) throw new IncorrectPasswordException("password is null");
         pw=decode(pw);
         if(pw==null) throw new IncorrectPasswordException("inexistant password");
@@ -48,15 +48,15 @@ public class StashDataBase {
     }
 
     public void createAccount(String username,String password){
-        internaldb.addAccount(username,password);
+        accountDM.addAccount(username,password);
     }
 
     public int listNumber(){
-        return internaldb.getAccountNumbers();
+        return accountDM.getAccountNumbers();
     }
 
     public boolean usernameExists(String username) {
-        return internaldb.accountExists(username);
+        return accountDM.accountExists(username);
     }
 
     protected boolean isGod(String username,String password){
@@ -66,19 +66,19 @@ public class StashDataBase {
     }
 
     public void deleteAcocunt(String username){
-        internaldb.deleteAccount(username);
+        accountDM.deleteAccount(username);
     }
 
     public void updateAcocunt(int old,String username,String pw){
-        internaldb.replace(old,username,pw);
+        accountDM.replace(old,username,pw);
     }
 
     public void executeQuerry(String querry){
-        internaldb.execute(querry);
+        accountDM.execute(querry);
     }
 
     public List<Info> getAccountList(){
-        return internaldb.getAccounts();
+        return accountDM.getAccounts();
     }
 
     //TODO
@@ -93,6 +93,6 @@ public class StashDataBase {
 
     //TODO
     private String getPassword(String username){
-        return internaldb.getPassword(username);
+        return accountDM.getPassword(username);
     }
 }

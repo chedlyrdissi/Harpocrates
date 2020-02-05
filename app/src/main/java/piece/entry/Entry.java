@@ -1,4 +1,4 @@
-package piece;
+package piece.entry;
 
 public class Entry {
     private String key;
@@ -36,5 +36,21 @@ public class Entry {
 
     public String toString(){
         return key+" = "+value;
+    }
+
+    public static boolean isValidKey( String key ){
+        if ( key == null || key.isEmpty() ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static boolean isValidValue( String value ) {
+        if ( value == null || value.isEmpty() ) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

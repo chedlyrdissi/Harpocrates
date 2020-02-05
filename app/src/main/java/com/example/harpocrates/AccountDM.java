@@ -10,7 +10,7 @@ import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InternalHandler extends SQLiteOpenHelper {
+public class AccountDM extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "stash.db";
@@ -20,7 +20,7 @@ public class InternalHandler extends SQLiteOpenHelper {
     private static final String COLUMN_PASSWORD= "password";
     private static final String COLUMN_INFOID="info";
 
-    public InternalHandler(Context context) {
+    public AccountDM(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

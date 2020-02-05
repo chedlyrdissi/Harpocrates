@@ -3,6 +3,8 @@ package piece;
 import java.util.ArrayList;
 import java.util.List;
 
+import piece.entry.Entry;
+
 public class Piece {
 
     private String title;
@@ -94,7 +96,7 @@ public class Piece {
 
     public String infoToString() {
         StringBuilder builder=new StringBuilder();
-        for ( Entry e:items) {
+        for ( Entry e:items ) {
             builder.append(e.getKey()+ "=" + e.getValue() + "\n");
         }
         return builder.toString();
