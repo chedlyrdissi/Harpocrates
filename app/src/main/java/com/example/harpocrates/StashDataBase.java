@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
+import piece.entry.Entry;
+
 public class StashDataBase {
 
     private static StashDataBase instance;
@@ -81,6 +83,11 @@ public class StashDataBase {
         return accountDM.getAccounts();
     }
 
+    public boolean updateEntry( int previousID, String key, String value ) {
+        
+        return false;
+    }
+
     //TODO
     private String encode(String word){
         return word;
@@ -95,4 +102,5 @@ public class StashDataBase {
     private String getPassword(String username){
         return accountDM.getPassword(username);
     }
+
 }

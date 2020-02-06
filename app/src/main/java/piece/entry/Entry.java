@@ -1,6 +1,8 @@
 package piece.entry;
 
 public class Entry {
+
+    private int id;
     private String key;
     private String value;
 
@@ -52,5 +54,13 @@ public class Entry {
         } else {
             return true;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/colorBack"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/entryModifyDialogKey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="45"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="textPersonName"
+            android:padding="3dp"
+            android:textColor="@color/colorSecondary"
+            android:textColorHighlight="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary"
+            android:textColorLink="@color/colorSecondary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text=" = "
+            android:textColor="@color/colorSecondary"
+            android:textColorHighlight="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary"
+            android:textColorLink="@color/colorSecondary" />
+
+        <EditText
+            android:id="@+id/entryModifyDialogValue"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="45"
+            android:ems="10"
+            android:gravity="left"
+            android:inputType="textPersonName"
+            android:padding="3dp"
+            android:textColor="@color/colorSecondary"
+            android:textColorHighlight="@color/colorSecondary"
+            android:textColorHint="@color/colorSecondary"
+            android:textColorLink="@color/colorSecondary" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/entryModifyDialogSaveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/piece_border_reduced"
+        android:enabled="false"
+        android:text="@string/save"
+        android:textColor="@color/colorSecondary"
+        android:textColorHighlight="@color/colorSecondary"
+        android:textColorHint="@color/colorSecondary"
+        android:textColorLink="@color/colorSecondary" />
+</LinearLayout>
