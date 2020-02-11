@@ -1,6 +1,9 @@
 package com.example.harpocrates;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import piece.Piece;
@@ -32,5 +35,11 @@ public class    Helper {
             list.add(piece);
         }
         return list;
+    }
+
+    public static String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

@@ -4,7 +4,9 @@ public class Entry {
 
     private int id;
     private String key;
+    private boolean keyVisible;
     private String value;
+    private boolean valueVisible;
 
     public Entry(String key, String value){
         this.key=key;
@@ -62,5 +64,21 @@ public class Entry {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isValueVisible() {
+        return valueVisible;
+    }
+
+    public void setValueVisible(boolean valueVisible) {
+        this.valueVisible = valueVisible;
+    }
+
+    public boolean isKeyVisible() {
+        return keyVisible;
+    }
+
+    public void setKeyVisible(boolean keyVisible) {
+        this.keyVisible = keyVisible;
     }
 }
