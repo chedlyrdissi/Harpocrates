@@ -1,4 +1,4 @@
-package com.example.harpocrates;
+package com.example.harpocrates.account;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,19 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDM extends SQLiteOpenHelper {
 
-    protected static final int DATABASE_VERSION = 1;
-    protected static final String DATABASE_NAME = "stash.db";
-    protected static final String TABLE= "accounts";
-    protected static final String COLUMN_ID = "_id";
-    protected static final String COLUMN_USERNAME = "username";
-    protected static final String COLUMN_PASSWORD= "password";
-    protected static final String COLUMN_INFOID="info";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "harpocrates.db";
+    public static final String TABLE= "user";
+    public static final String COLUMN_ID = "user_id";
+    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_PASSWORD= "password";
+    public static final String COLUMN_INFOID="info";
 
     public AccountDM(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

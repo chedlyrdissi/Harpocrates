@@ -1,4 +1,4 @@
-package com.example.harpocrates.user;
+package com.example.harpocrates.account;
 
 public class User {
 

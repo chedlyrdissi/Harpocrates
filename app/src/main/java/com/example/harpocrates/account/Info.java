@@ -1,4 +1,4 @@
-package com.example.harpocrates;
+package com.example.harpocrates.account;
 
 public class Info {
     int ID;

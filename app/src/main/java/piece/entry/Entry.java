@@ -8,7 +8,8 @@ public class Entry {
     private String value;
     private boolean valueVisible;
 
-    public Entry(String key, String value){
+    public Entry( int id, String key, String value ){
+        this.id = id;
         this.key=key;
         this.value=value;
     }
@@ -30,12 +31,11 @@ public class Entry {
     }
 
     public boolean equals(Object other){
-
-        if (other==null) return false;
-        if ( !(other instanceof Entry) ) return false;
-
-        return this.key.equals(((Entry) other).key)
-                && this.value.equals(((Entry) other).value);
+        if ( other==null || !(other instanceof Entry) ) {
+            return false;
+        }
+        Entry o = (Entry) other;
+        return this.id == o.id;
     }
 
     public String toString(){
