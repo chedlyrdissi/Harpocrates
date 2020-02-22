@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
                 public void run() {
                     Intent intent=new Intent(MainActivity.this, AdminActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }, 1000);
         }else if (type==AccountType.regular){
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
                 public void run() {
                     Intent intent=new Intent(MainActivity.this, RegularActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }, 1000);
         }

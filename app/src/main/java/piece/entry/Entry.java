@@ -2,13 +2,13 @@ package piece.entry;
 
 public class Entry {
 
-    private int id;
+    private long id;
     private String key;
     private boolean keyVisible;
     private String value;
     private boolean valueVisible;
 
-    public Entry( int id, String key, String value ){
+    public Entry( long id, String key, String value ){
         this.id = id;
         this.key=key;
         this.value=value;
@@ -58,7 +58,7 @@ public class Entry {
         }
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

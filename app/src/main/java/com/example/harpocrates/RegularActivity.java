@@ -60,7 +60,7 @@ public class RegularActivity extends AppCompatActivity implements PieceViewDialo
                     public void onClick(View v) {
                         String message;
                         if(Helper.usableContext(context.getText().toString())){
-                            list.add(new Piece(context.getText().toString()));
+                            list.add(new Piece(-1, context.getText().toString()));
                             message="context created";
                             dialog.dismiss();
                         }else{

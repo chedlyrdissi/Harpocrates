@@ -7,10 +7,11 @@ import piece.entry.Entry;
 
 public class Piece {
 
+    private long id;
     private String title;
     private List<Entry> items;
 
-    public Piece(String title){
+    public Piece(long id, String title){
         this.title=title;
         items=new ArrayList<>();
     }
@@ -38,7 +39,7 @@ public class Piece {
         if (!validKey(key) || !validValue(value))
             return false;
 
-        Entry entry=new Entry(key,value);
+        Entry entry=new Entry(id,key,value);
 
         for (int i=0;i<items.size();i++) {
             if (items.get(i).equals(entry)) {
@@ -54,7 +55,7 @@ public class Piece {
         if (!validKey(key) || !validValue(value))
             return false;
 
-        Entry entry=new Entry(key,value);
+        Entry entry=new Entry(id,key,value);
 
         int i=0;
         while ( i<items.size() ) {
@@ -101,10 +102,6 @@ public class Piece {
         }
         return builder.toString();
     }
-
-    //******************************************//
-    //      validation methods                  //
-    //******************************************//
 
     private static boolean validtitle(String title){
         if (title==null) return false;

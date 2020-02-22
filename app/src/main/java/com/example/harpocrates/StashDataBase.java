@@ -83,7 +83,7 @@ public class StashDataBase {
         return accountDM.getAccounts();
     }
 
-    public boolean updateEntry( int previousID, String key, String value ) {
+    public boolean updateEntry( long previousID, String key, String value ) {
         
         return false;
     }
