@@ -7,21 +7,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import piece.Piece;
-import piece.PieceRecyclerViewAdapter;
 import piece.PieceViewDialogContext;
 
 public class RegularActivity extends AppCompatActivity implements PieceViewDialogContext {
@@ -50,21 +45,22 @@ public class RegularActivity extends AppCompatActivity implements PieceViewDialo
             @Override
             public void onClick(final View view) {
                 final Dialog dialog=new Dialog(RegularActivity.this);
-                dialog.setContentView(R.layout.add_context_dialog);
+                dialog.setContentView(R.layout.add_title_dialog);
 
-                final EditText context=dialog.findViewById(R.id.contextToAdd);
-                Button add=dialog.findViewById(R.id.createContextButton);
+                final EditText title=dialog.findViewById(R.id.dialogTitleToAdd);
+                Button add=dialog.findViewById(R.id.dialogCreateTitleButton);
 
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String message;
-                        if(Helper.usableContext(context.getText().toString())){
-                            list.add(new Piece(-1, context.getText().toString()));
-                            message="context created";
+                        if(Helper.usableTitle(title.getText().toString())){
+                            Piece piece = StashDataBase.getInstance(getApplicationContext()).createTitle( title.getText().toString() );
+                            list.add( piece );
+                            message="title created";
                             dialog.dismiss();
                         }else{
-                            message="the context is inusable";
+                            message="the title is inusable";
                         }
                         Toast.makeText(getApplicationContext(),message
                                 ,Toast.LENGTH_SHORT).show();

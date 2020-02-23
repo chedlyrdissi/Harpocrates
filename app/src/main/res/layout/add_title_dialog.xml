@@ -10,23 +10,23 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/contextToAdd"
+            android:id="@+id/dialogTitleToAdd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBack"
             android:ems="10"
             android:gravity="center"
-            android:hint="context"
+            android:hint="title"
             android:inputType="textPersonName"
             android:textColor="@color/colorSecondary"
             android:textColorHint="@color/colorSecondary" />
 
         <Button
-            android:id="@+id/createContextButton"
+            android:id="@+id/dialogCreateTitleButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBack"
-            android:text="create context"
+            android:text="create title"
             android:textColor="@color/colorSecondary" />
     </LinearLayout>
 

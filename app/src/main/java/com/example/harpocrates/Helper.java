@@ -18,8 +18,8 @@ public class    Helper {
         return password!=null;
     }
     //TODO
-    public static boolean usableContext(String context){
-        return true;
+    public static boolean usableTitle(String title){
+        return title != null && !title.isEmpty();
     }
     //TODO
     private static boolean listOfInfoIsValid(String[] s){return true;}

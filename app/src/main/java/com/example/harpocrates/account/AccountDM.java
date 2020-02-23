@@ -3,31 +3,44 @@ package com.example.harpocrates.account;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import com.example.harpocrates.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDM extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "harpocrates.db";
-    public static final String TABLE= "user";
-    public static final String COLUMN_ID = "user_id";
-    public static final String COLUMN_USERNAME = "username";
-    public static final String COLUMN_PASSWORD= "password";
-    public static final String COLUMN_INFOID="info";
+    public static final int DATABASE_VERSION        = 2;
+    public static final String DATABASE_NAME        = "harpocrates.db";
+    public static final String TABLE                = "user";
+    public static final String COLUMN_ID            = "user_id";
+    public static final String COLUMN_USERNAME      = "username";
+    public static final String COLUMN_PASSWORD      = "password";
+    public static final String COLUMN_CREAION_DATE  = "creation_date";
+    public static final String COLUMN_LAST_MODIFIED = "last_modified";
+
+    Context context;
 
     public AccountDM(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
-                TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_USERNAME
-                + " TEXT," + COLUMN_PASSWORD + " TEXT, "+COLUMN_INFOID+" Integer )";
+        String CREATE_PRODUCTS_TABLE = "CREATE TABLE USER (\n" +
+                "    user_id       INTEGER  PRIMARY KEY AUTOINCREMENT,\n" +
+                "    username      STRING   NOT NULL\n" +
+                "                           UNIQUE ON CONFLICT ABORT,\n" +
+                "    password      STRING   NOT NULL,\n" +
+                "    creation_date STRING,\n" +
+                "    last_modified STRING     NOT NULL\n" +
+                ");";
 
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
@@ -38,20 +51,51 @@ public class AccountDM extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addAccount(String username,String password){
+    public User addAccount(String username, String password){
 
-        if (username==null || password==null) return;
+        boolean validUsername = validUsername( username );
+        boolean validPassword = validPassword( password );
 
-        if(accountExists(username)){
-            return;
+        if ( validUsername && validPassword ) {
+            SQLiteDatabase db = null;
+            long id;
+            try {
+
+                db = getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put( COLUMN_USERNAME, username );
+                values.put( COLUMN_PASSWORD, password );
+                values.put( COLUMN_CREAION_DATE, Helper.getDateTime() );
+                values.put( COLUMN_LAST_MODIFIED, Helper.getDateTime() );
+
+                id = db.insert( TABLE, null, values );
+
+                if ( id < 0 ) {
+                    throw new SQLException( "an error occured while inserting the user \n"
+                            + " username : " + username + "\n"
+                            + " password : " + password + "\n" );
+                }
+
+            } catch (Exception e) {
+                throw new SQLException( "an error occured while inserting the user \n"
+                        + " username : '" + username + "'\n"
+                        + " password : '" + password + "'\n" );
+            } finally {
+                db.close();
+            }
+
+            return new User( id, username, password );
+        } else if ( !validPassword && !validUsername ) {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " username : '" + username + "'\n"
+                    + " password : '" + password + "'\n" );
+        } else if ( !validPassword ) {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " password : '" + password + "'\n" );
+        } else {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " username : " + username + "\n" );
         }
-
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues values=new ContentValues();
-        values.put(COLUMN_USERNAME,username);
-        values.put(COLUMN_PASSWORD,password);
-        db.insert(TABLE,null,values);
-        db.close();
     }
 
     public boolean accountExists(String username){
@@ -106,25 +150,34 @@ public class AccountDM extends SQLiteOpenHelper {
         return result;
     }
 
-    public List<Info> getAccounts(){
-        List<Info> list=new ArrayList<>();
-        Info info;
-        SQLiteDatabase db=this.getReadableDatabase();
-        String query="SELECT * From "+ TABLE;
-        Cursor cursor=db.rawQuery(query,null);
-        cursor.moveToFirst();
-        for(int i=0;i<cursor.getCount();i++){
-            //get values
-            info=new Info();
-            info.ID=Integer.parseInt(cursor.getString(0));
-            info.username=cursor.getString(1);
-            info.pw=cursor.getString(2);
+    public List<User> getAccounts(){
+        List<User> list = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " +
+                "user_id, " +
+                "username, " +
+                "password, " +
+                "creation_date, " +
+                "last_modified " +
+                "From " + TABLE;
+        Cursor cursor = db.rawQuery(query,null);
 
-            list.add(info);
-            cursor.moveToNext();
+        cursor.moveToFirst();
+        cursor.moveToPrevious();
+        while ( cursor.moveToNext() ) {
+            //get values
+            long id = cursor.getInt(0);
+            String username = cursor.getString(1);
+            String pw = cursor.getString(2);
+            String creationDate = cursor.getString(3);
+            String lastModified = cursor.getString(4);
+
+            list.add( new User( id, username, pw, creationDate, lastModified ) );
         }
+
         cursor.close();
         db.close();
+        Toast.makeText( context, list.size() + "", Toast.LENGTH_SHORT ).show();
         return list;
     }
 
@@ -154,4 +207,64 @@ public class AccountDM extends SQLiteOpenHelper {
         db.rawQuery(querry,null);
         db.close();
     }
+
+    private boolean validUsername( String username ) {
+        boolean isValid = false;
+
+        if ( username != null && !username.isEmpty() ) {
+            SQLiteDatabase db = getReadableDatabase();
+            String querry = " SELECT " + COLUMN_ID + " FROM " + TABLE
+                    + " WHERE " + COLUMN_USERNAME + " = '"+username+"' ";
+            try {
+                isValid = db.rawQuery(querry, null).getCount() == 0;
+            } catch ( Exception e ) {
+
+            } finally {
+                db.close();
+            }
+        }
+
+        return isValid;
+    }
+
+    private boolean validPassword( String pw ) {
+        boolean isValid = false;
+        if ( pw != null && !pw.isEmpty() ) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
 }
+
+/*
+CREATE TABLE sqlitestudio_temp_table AS SELECT *
+                                          FROM USER;
+
+DROP TABLE USER;
+
+CREATE TABLE USER (
+    user_id       INTEGER  PRIMARY KEY AUTOINCREMENT,
+    username      STRING   NOT NULL
+                           UNIQUE ON CONFLICT ABORT,
+    password      STRING   NOT NULL,
+    creation_date DATETIME,
+    last_modified DATE     NOT NULL
+);
+
+INSERT INTO USER (
+                     user_id,
+                     username,
+                     password,
+                     creation_date,
+                     last_modified
+                 )
+                 SELECT user_id,
+                        username,
+                        password,
+                        creation_date,
+                        last_modified
+                   FROM sqlitestudio_temp_table;
+
+DROP TABLE sqlitestudio_temp_table;
+ */

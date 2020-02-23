@@ -4,17 +4,23 @@ import android.content.Context;
 
 import com.example.harpocrates.account.AccountDM;
 import com.example.harpocrates.account.Info;
+import com.example.harpocrates.account.User;
 
 import java.util.List;
+
+import piece.Piece;
+import piece.TitleDM;
 
 public class StashDataBase {
 
     private static StashDataBase instance;
     private static AccountDM accountDM;
+    private static TitleDM titleDM;
 
     private StashDataBase(Context context){
       //  dummy=new DummyDataBase();
-        accountDM=new AccountDM(context);
+        accountDM=new AccountDM( context );
+        titleDM=new TitleDM( context );
     }
 
     public static StashDataBase getInstance(Context context){
@@ -24,7 +30,7 @@ public class StashDataBase {
         return instance;
     }
 
-    public void authenticate(String username,String password) throws
+    public User authenticate(String username,String password) throws
             IncorrectPasswordException,IncorrectUsernameException{
         //TODO
         if(!accountDM.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
@@ -33,6 +39,8 @@ public class StashDataBase {
         pw=decode(pw);
         if(pw==null) throw new IncorrectPasswordException("inexistant password");
         if(!pw.equals(password)) throw new IncorrectPasswordException("incorrect password");
+
+        return null;
     }
 
     public AccountType getAccountType(String username,String password){
@@ -79,13 +87,17 @@ public class StashDataBase {
         accountDM.execute(querry);
     }
 
-    public List<Info> getAccountList(){
+    public List<User> getAccountList(){
         return accountDM.getAccounts();
     }
 
     public boolean updateEntry( long previousID, String key, String value ) {
         
         return false;
+    }
+
+    public Piece createTitle( String title ) {
+        return titleDM.createTitle( title );
     }
 
     //TODO

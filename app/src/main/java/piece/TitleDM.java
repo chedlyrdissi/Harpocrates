@@ -21,7 +21,7 @@ import java.util.List;
 
 public class TitleDM extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION        = 1;
+    public static final int DATABASE_VERSION        = 2;
     public static final String DATABASE_NAME        = "harpocrates.db";
     public static final String TABLE                = "title";
     public static final String COLUMN_ID            = "title_id";
@@ -42,8 +42,8 @@ public class TitleDM extends SQLiteOpenHelper {
 
     private static final String TEMPTABLENAME       = "title_temp_table";
 
-    public TitleDM(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public TitleDM(@Nullable Context context ) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class TitleDM extends SQLiteOpenHelper {
     public Piece createTitle( String title ) {
         if ( validTitle( title ) ) {
             SQLiteDatabase db = null;
-            long id = -1;
+            long id;
 
             try {
                 db = getWritableDatabase();

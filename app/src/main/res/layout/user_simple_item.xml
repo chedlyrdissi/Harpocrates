@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/piece_border_reduced"
+    android:inputType="textMultiLine"
+    android:padding="15dp"
+    android:textColor="@color/colorSecondary"
+    android:textColorHighlight="@color/colorSecondary"
+    android:textColorHint="@color/colorSecondary"
+    android:textColorLink="@color/colorSecondary">
+
+</TextView>

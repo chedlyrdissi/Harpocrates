@@ -43,22 +43,6 @@
                     android:textColorHint="@color/colorSecondary" />
 
                 <EditText
-                    android:id="@+id/confirmPasswordField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@color/colorBack"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="confirm password"
-                    android:inputType="textPersonName|textPassword"
-                    android:textColor="@color/colorSecondary"
-                    android:textColorHint="@color/colorSecondary" />
-
-                <EditText
                     android:id="@+id/passwordField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,6 +54,22 @@
                     android:ems="10"
                     android:gravity="center"
                     android:hint="password"
+                    android:inputType="textPersonName|textPassword"
+                    android:textColor="@color/colorSecondary"
+                    android:textColorHint="@color/colorSecondary" />
+
+                <EditText
+                    android:id="@+id/confirmPasswordField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/colorBack"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="confirm password"
                     android:inputType="textPersonName|textPassword"
                     android:textColor="@color/colorSecondary"
                     android:textColorHint="@color/colorSecondary" />

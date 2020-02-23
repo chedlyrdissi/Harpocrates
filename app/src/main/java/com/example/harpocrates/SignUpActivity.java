@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -27,21 +28,26 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!StashDataBase.getInstance(getApplicationContext()).usernameExists(user.getText().toString())){
-                    if (passwordConfirmed()){
-                        StashDataBase.getInstance(getApplicationContext()).createAccount(
-                                user.getText().toString(),pw.getText().toString());
-                        Snackbar.make(v,"account created", Snackbar.LENGTH_SHORT)
-                                .setAction("Action", null).show();
-                        finish();
+                try {
+                    if (!StashDataBase.getInstance(getApplicationContext()).usernameExists(user.getText().toString())){
+                        if (passwordConfirmed()){
+                            StashDataBase.getInstance(getApplicationContext()).createAccount(
+                                    user.getText().toString(),pw.getText().toString());
+                            Snackbar.make(v,"account created", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                            finish();
+                        }else{
+                            Snackbar.make(v,"passwords do not match", Snackbar.LENGTH_SHORT)
+                                    .setAction("Action", null).show();
+                        }
                     }else{
-                        Snackbar.make(v,"passwords do not match", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(v,"username in use", Snackbar.LENGTH_SHORT)
                                 .setAction("Action", null).show();
                     }
-                }else{
-                    Snackbar.make(v,"username in use", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                } catch ( Exception e ) {
+                    Toast.makeText( getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 

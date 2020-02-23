@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.harpocrates.account.AdminUser;
+import com.example.harpocrates.account.User;
+import com.example.harpocrates.account.UserBean;
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -69,6 +72,7 @@ public class logInFragment extends Fragment {
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), StashDataBase.getInstance(getContext()).listNumber() + "",Toast.LENGTH_SHORT).show();
                 unlockButtonClick();
             }
         });
@@ -117,11 +121,12 @@ public class logInFragment extends Fragment {
         if (StashDataBase.getInstance(getContext()).isGod(username.getText().toString(),
                 password.getText().toString())){
             Toast.makeText(getContext(),"welcome to god mode",Toast.LENGTH_SHORT).show();
+            UserBean.getInstance().setCurrentUser( new AdminUser(-1,"","admin"));
             mListener.onFragmentInteraction(username.getText().toString(),
                     password.getText().toString());
         }else{
             try{
-                StashDataBase.getInstance(getContext()).authenticate(username.getText().toString(),
+                User user = StashDataBase.getInstance(getContext()).authenticate(username.getText().toString(),
                         password.getText().toString());
 
                 usernameOrb.setVisibility(View.VISIBLE);
@@ -130,6 +135,7 @@ public class logInFragment extends Fragment {
                 usernameOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
                 passwordOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 
+                UserBean.getInstance().setCurrentUser( (user==null)?new User(-1,username.getText().toString(),password.getText().toString() ):user);
                 mListener.onFragmentInteraction(username.getText().toString(),
                         password.getText().toString());
 

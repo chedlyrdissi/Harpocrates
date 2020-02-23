@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements logInFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loginfrag = ( logInFragment ) getSupportFragmentManager().findFragmentById( R.id.welcomeLogInFragment );
+        // getApplicationContext().deleteDatabase("harpocrates.db");
     }
 
     @Override
