@@ -209,21 +209,26 @@ public class AccountDM extends SQLiteOpenHelper {
     }
 
     private boolean validUsername( String username ) {
+//        boolean isValid = false;
+//
+//        if ( username != null && !username.isEmpty() ) {
+//            SQLiteDatabase db = getReadableDatabase();
+//            String querry = " SELECT " + COLUMN_ID + " FROM " + TABLE
+//                    + " WHERE " + COLUMN_USERNAME + " = '"+username+"' ";
+//            try {
+//                isValid = db.rawQuery(querry, null).getCount() == 0;
+//            } catch ( Exception e ) {
+//
+//            } finally {
+//                db.close();
+//            }
+//        }
+//
+//        return isValid;
         boolean isValid = false;
-
         if ( username != null && !username.isEmpty() ) {
-            SQLiteDatabase db = getReadableDatabase();
-            String querry = " SELECT " + COLUMN_ID + " FROM " + TABLE
-                    + " WHERE " + COLUMN_USERNAME + " = '"+username+"' ";
-            try {
-                isValid = db.rawQuery(querry, null).getCount() == 0;
-            } catch ( Exception e ) {
-
-            } finally {
-                db.close();
-            }
+            isValid = true;
         }
-
         return isValid;
     }
 
@@ -235,6 +240,65 @@ public class AccountDM extends SQLiteOpenHelper {
         return isValid;
     }
 
+    public User getAccount( String username, String password ) {
+
+        boolean validUsername = validUsername( username );
+        boolean validPassword = validPassword( password );
+        User user = null;
+        if ( validUsername && validPassword ) {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            try {
+                db = getReadableDatabase();
+                String[] columns = { COLUMN_ID, COLUMN_USERNAME };
+                String selection = COLUMN_USERNAME + " = ? and " + COLUMN_PASSWORD + " = ? ;";
+                String[] selectionArgs = { username, password };
+                cursor = db.query(
+                        TABLE,
+                        columns,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        COLUMN_CREAION_DATE
+                );
+
+                // get querry results
+                if ( cursor.moveToFirst() ) {
+                    user = new User(
+                            cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
+                            cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME))
+                    );
+//                    if ( cursor.moveToNext()) {
+//                        throw new duplicateUserException(
+//                                cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
+//                                cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME))
+//                        );
+//                    }
+                }
+
+            } catch (Exception e) {
+                throw new SQLException( "an error occured while fetching the user \n"
+                        + " username : '" + username + "'\n"
+                        + " password : '" + password + "'\n" );
+            }  finally {
+                db.close();
+                cursor.close();
+            }
+
+            return user;
+        } else if ( !validPassword && !validUsername ) {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " username : '" + username + "'\n"
+                    + " password : '" + password + "'\n" );
+        } else if ( !validPassword ) {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " password : '" + password + "'\n" );
+        } else {
+            throw new SQLException( "an error occured while inserting the user \n"
+                    + " username : " + username + "\n" );
+        }
+    }
 }
 
 /*

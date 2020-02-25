@@ -60,13 +60,13 @@ public class TitleDM extends SQLiteOpenHelper {
         db.execSQL( getDropTableStatement( TEMPTABLENAME ) );
     }
 
-    public List<Piece> getTitles(int user_id ) throws InexistantUserException {
+    public List<Piece> getTitles( long user_id  ) throws InexistantUserException {
         if ( validUserID( user_id ) ) {
             List<Piece> list = new ArrayList<>();
 
             // prepare querry
             String selection = COLUMN_USER_ID + " = ?";
-            String[] selectionArgs = { Integer.toString( user_id ) };
+            String[] selectionArgs = { Long.toString( user_id ) };
             Cursor resultSet = null;
             SQLiteDatabase db = null;
             try {
@@ -80,18 +80,17 @@ public class TitleDM extends SQLiteOpenHelper {
                         selectionArgs,
                         null,
                         null,
-                        null
+                        COLUMN_CREAION_DATE
                 );
 
                 // get querry results
-                if ( resultSet.moveToFirst() ) {
-                    resultSet.moveToPrevious();
-                    while ( resultSet.moveToNext() ) {
-                        list.add( new Piece(
-                                resultSet.getInt(0),
-                                resultSet.getString(1)
-                        ) );
-                    }
+                resultSet.moveToFirst();
+                resultSet.moveToPrevious();
+                while ( resultSet.moveToNext() ) {
+                    list.add( new Piece(
+                            resultSet.getInt(resultSet.getColumnIndex(COLUMN_ID)),
+                            resultSet.getString(resultSet.getColumnIndex(COLUMN_TITLE))
+                    ) );
                 }
 
             } catch ( Exception e ) {
@@ -233,7 +232,7 @@ public class TitleDM extends SQLiteOpenHelper {
     }
 
     //TODO to implement
-    private static boolean validUserID ( int user_id ) {
+    private static boolean validUserID ( long user_id ) {
         return true;
     }
 

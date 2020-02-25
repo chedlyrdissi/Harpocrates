@@ -3,6 +3,7 @@ package com.example.harpocrates;
 import android.content.Context;
 
 import com.example.harpocrates.account.AccountDM;
+import com.example.harpocrates.account.InexistantUserException;
 import com.example.harpocrates.account.Info;
 import com.example.harpocrates.account.User;
 
@@ -33,14 +34,15 @@ public class StashDataBase {
     public User authenticate(String username,String password) throws
             IncorrectPasswordException,IncorrectUsernameException{
         //TODO
-        if(!accountDM.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
-        String pw=accountDM.getPassword(username);
-        if(pw==null || password==null) throw new IncorrectPasswordException("password is null");
-        pw=decode(pw);
-        if(pw==null) throw new IncorrectPasswordException("inexistant password");
-        if(!pw.equals(password)) throw new IncorrectPasswordException("incorrect password");
-
-        return null;
+//        if(!accountDM.accountExists(username)) throw new IncorrectUsernameException("account does not exists");
+//        String pw=accountDM.getPassword(username);
+//        if(pw==null || password==null) throw new IncorrectPasswordException("password is null");
+//        pw=decode(pw);
+//        if(pw==null) throw new IncorrectPasswordException("inexistant password");
+//        if(!pw.equals(password)) throw new IncorrectPasswordException("incorrect password");
+//
+//        return null;
+        return accountDM.getAccount( username, encode(password) );
     }
 
     public AccountType getAccountType(String username,String password){
@@ -94,6 +96,10 @@ public class StashDataBase {
     public boolean updateEntry( long previousID, String key, String value ) {
         
         return false;
+    }
+
+    public List<Piece> getTitles ( long id ) throws InexistantUserException {
+        return titleDM.getTitles( id );
     }
 
     public Piece createTitle( String title ) {

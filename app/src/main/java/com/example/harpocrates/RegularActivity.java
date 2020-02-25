@@ -3,10 +3,13 @@ package com.example.harpocrates;
 import android.app.Dialog;
 import android.os.Bundle;
 
+import com.example.harpocrates.account.UserBean;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import piece.Piece;
@@ -23,18 +27,27 @@ public class RegularActivity extends AppCompatActivity implements PieceViewDialo
 
     private PieceFragment listFragment;
     private Toolbar toolbar;
-    private List<Piece> list;
+    private List<Piece> list = new ArrayList<>();
     protected FrameLayout layout;
+    protected CoordinatorLayout mainRegularLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular);
 
-        list = Helper.createDummyList(30,5);
+        mainRegularLayout = findViewById( R.id.mainRegularLayout );
+        //list = Helper.createDummyList(30,5);
 
         if ( listFragment != null ) {
             getSupportFragmentManager().beginTransaction().remove(listFragment).commit();
+        }
+
+        try {
+            list = StashDataBase.getInstance(getApplicationContext()).getTitles(UserBean.getInstance().getCurrentUser().getID());
+        } catch ( Exception e ) {
+            Snackbar.make( mainRegularLayout , "a problem has occured while fetching the titles", Snackbar.LENGTH_LONG).show();
+            Toast.makeText( getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG ).show();
         }
 
         listFragment=new PieceFragment(list);

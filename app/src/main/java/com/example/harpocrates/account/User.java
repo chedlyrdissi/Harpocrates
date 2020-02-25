@@ -12,6 +12,10 @@ public class User {
         this(id,username,password,"","");
     }
 
+    public User( long id, String username ) { // TODO remove pw section
+        this(id,username,"","","");
+    }
+
     public User( long id,
                  String username,
                  String password,

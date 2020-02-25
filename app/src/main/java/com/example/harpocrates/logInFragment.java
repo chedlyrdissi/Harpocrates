@@ -135,7 +135,7 @@ public class logInFragment extends Fragment {
                 usernameOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
                 passwordOrb.setImageDrawable(getResources().getDrawable(R.drawable.correct));
 
-                UserBean.getInstance().setCurrentUser( (user==null)?new User(-1,username.getText().toString(),password.getText().toString() ):user);
+                UserBean.getInstance().setCurrentUser( user );
                 mListener.onFragmentInteraction(username.getText().toString(),
                         password.getText().toString());
 
